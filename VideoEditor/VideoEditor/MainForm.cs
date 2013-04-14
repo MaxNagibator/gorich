@@ -89,7 +89,7 @@ namespace VideoEditor
             ((VideoStreamControl) sender).uiMainPanel.BackColor = Color.Aquamarine;
             var videoStream = e.VideoStream;
             videoStream.GetFrameOpen();
-            pictureBox1.Image = videoStream.GetBitmap(0);
+            pictureBox1.Image = videoStream.GetBitmap(videoStream.CountFrames / 2);
             videoStream.GetFrameClose();
         }
 
