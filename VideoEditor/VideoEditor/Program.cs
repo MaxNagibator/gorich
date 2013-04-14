@@ -16,7 +16,7 @@ namespace VideoEditor
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new uiMainForm());
+            Application.Run(new MainForm());
         }
     }
 }
