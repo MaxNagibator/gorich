@@ -32,8 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AviFile">
-      <HintPath>..\..\..\..\aviFileWrapperDemo_src\AviFile\bin\Debug\AviFile.dll</HintPath>
+    <Reference Include="AviFile, Version=1.0.4852.31483, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libs\AviFile.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
