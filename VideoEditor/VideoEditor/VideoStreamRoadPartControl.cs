@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using AviFile;
 
 namespace VideoEditor
 {
@@ -16,6 +17,8 @@ namespace VideoEditor
         {
             InitializeComponent();
         }
+
+        public VideoStream VideoStream { get; set; }
 
         public int RightCoordinate
         {
