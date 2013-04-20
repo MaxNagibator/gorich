@@ -100,5 +100,20 @@ namespace VideoEditor
                 g.DrawImage(bmp, 0, 0, width, height);
             return resizedBitmap;
         }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            videoStreamViewCollectionControl1.AddVideoStreamView(new VideoStreamViewControl());
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            videoStreamViewCollectionControl1.DeleteVideoStreamView();
+        }
     }
 }
