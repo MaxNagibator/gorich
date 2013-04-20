@@ -61,6 +61,9 @@
             this.Controls.Add(this.uiLeftCoordinateLabel);
             this.Name = "VideoStreamRoadPartControl";
             this.Size = new System.Drawing.Size(217, 75);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.VideoStreamRoadPartControl_MouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.VideoStreamRoadPartControl_MouseMove);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.VideoStreamRoadPartControl_MouseUp);
             this.ResumeLayout(false);
             this.PerformLayout();
 

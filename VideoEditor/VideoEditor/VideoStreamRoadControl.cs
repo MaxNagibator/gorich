@@ -26,6 +26,12 @@ namespace VideoEditor
             InitializeComponent();
         }
 
+        public void AddVideoStreamRoadPart(VideoStreamRoadPartControl videoStreamRoadPartControl)
+        {
+            videoStreamRoadPartControl.MouseDown += videoStreamRoadPartControl_MouseDown;
+            uiMainPanel.Controls.Add(videoStreamRoadPartControl);
+        }
+
         private void uiMainPanel_DragEnter(object sender, DragEventArgs e)
         {
 
@@ -33,18 +39,23 @@ namespace VideoEditor
 
         private void uiMainPanel_DragDrop(object sender, DragEventArgs e)
         {
-            videoStreamRoadPartControl.Location = new Point(videoStreamRoadPartControl.Location.X, videoStreamRoadPartControl.Location.Y);
+            videoStreamRoadPartControl.Location = new Point(videoStreamRoadPartControl.Location.X,
+                                                            videoStreamRoadPartControl.Location.Y);
             IsMoving = false;
         }
 
 
-        private void videoStreamRoadPartControl1_MouseDown(object sender, MouseEventArgs e)
+        private void videoStreamRoadPartControl_MouseDown(object sender, MouseEventArgs e)
         {
-            var videoStreamEventArgs = new VideoStreamEventArgs { VideoStream = VideoStream };
+            var videoStreamEventArgs = new VideoStreamEventArgs {VideoStream = VideoStream};
             FireSelectVideoStreamViewControl(videoStreamEventArgs);
-            IsMoving = true;
-            _first = true;
-            videoStreamRoadPartControl.DoDragDrop(videoStreamRoadPartControl, DragDropEffects.All);
+            if (videoStreamRoadPartControl.MoveEnable)
+            {
+                IsMoving = true;
+                _first = true;
+                videoStreamRoadPartControl.SelectClear();
+                videoStreamRoadPartControl.DoDragDrop(videoStreamRoadPartControl, DragDropEffects.All);
+            }
         }
 
         private void uiMainPanel_DragOver(object sender, DragEventArgs e)
@@ -74,7 +85,7 @@ namespace VideoEditor
 
         private void CheckRoadSize(int rightCoordinate)
         {
-                Width = rightCoordinate;
+            Width = rightCoordinate;
         }
 
         public void SetActive()
@@ -86,10 +97,10 @@ namespace VideoEditor
         {
             uiMainPanel.BackColor = Color.Cornsilk;
         }
-    
+
         private void uiMainPanel_Click(object sender, EventArgs e)
         {
-            var videoStreamEventArgs = new VideoStreamEventArgs { VideoStream = VideoStream };
+            var videoStreamEventArgs = new VideoStreamEventArgs {VideoStream = VideoStream};
             FireSelectVideoStreamViewControl(videoStreamEventArgs);
         }
 

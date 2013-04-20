@@ -55,7 +55,7 @@
             this.videoStreamRoadPartControl.Name = "videoStreamRoadPartControl";
             this.videoStreamRoadPartControl.Size = new System.Drawing.Size(217, 75);
             this.videoStreamRoadPartControl.TabIndex = 1;
-            this.videoStreamRoadPartControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.videoStreamRoadPartControl1_MouseDown);
+            this.videoStreamRoadPartControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.videoStreamRoadPartControl_MouseDown);
             // 
             // VideoStreamRoadControl
             // 

@@ -33,8 +33,10 @@
             this.uiVideoListPanel = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.uiDeleteVideoStreamButton = new System.Windows.Forms.Button();
+            this.uiAddVideoStreamButton = new System.Windows.Forms.Button();
+            this.uiDecreaseRoadCollectionWidthButton = new System.Windows.Forms.Button();
+            this.uiIncreaseRoadCollectionWidthButton = new System.Windows.Forms.Button();
             this.videoStreamViewCollectionControl1 = new VideoEditor.VideoStreamRoadCollectionControl();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -66,7 +68,7 @@
             this.uiVideoListPanel.BackColor = System.Drawing.SystemColors.Info;
             this.uiVideoListPanel.Location = new System.Drawing.Point(3, 29);
             this.uiVideoListPanel.Name = "uiVideoListPanel";
-            this.uiVideoListPanel.Size = new System.Drawing.Size(260, 234);
+            this.uiVideoListPanel.Size = new System.Drawing.Size(260, 280);
             this.uiVideoListPanel.TabIndex = 2;
             // 
             // pictureBox1
@@ -93,32 +95,54 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.button2);
-            this.splitContainer1.Panel2.Controls.Add(this.button1);
+            this.splitContainer1.Panel2.Controls.Add(this.uiDecreaseRoadCollectionWidthButton);
+            this.splitContainer1.Panel2.Controls.Add(this.uiIncreaseRoadCollectionWidthButton);
+            this.splitContainer1.Panel2.Controls.Add(this.uiDeleteVideoStreamButton);
+            this.splitContainer1.Panel2.Controls.Add(this.uiAddVideoStreamButton);
             this.splitContainer1.Panel2.Controls.Add(this.videoStreamViewCollectionControl1);
             this.splitContainer1.Size = new System.Drawing.Size(1286, 602);
             this.splitContainer1.SplitterDistance = 312;
             this.splitContainer1.TabIndex = 5;
             // 
-            // button2
+            // uiDeleteVideoStreamButton
             // 
-            this.button2.Location = new System.Drawing.Point(157, 80);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 5;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.uiDeleteVideoStreamButton.Location = new System.Drawing.Point(3, 32);
+            this.uiDeleteVideoStreamButton.Name = "uiDeleteVideoStreamButton";
+            this.uiDeleteVideoStreamButton.Size = new System.Drawing.Size(75, 23);
+            this.uiDeleteVideoStreamButton.TabIndex = 5;
+            this.uiDeleteVideoStreamButton.Text = "delete";
+            this.uiDeleteVideoStreamButton.UseVisualStyleBackColor = true;
+            this.uiDeleteVideoStreamButton.Click += new System.EventHandler(this.button2_Click);
             // 
-            // button1
+            // uiAddVideoStreamButton
             // 
-            this.button1.Location = new System.Drawing.Point(157, 51);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.uiAddVideoStreamButton.Location = new System.Drawing.Point(3, 3);
+            this.uiAddVideoStreamButton.Name = "uiAddVideoStreamButton";
+            this.uiAddVideoStreamButton.Size = new System.Drawing.Size(75, 23);
+            this.uiAddVideoStreamButton.TabIndex = 4;
+            this.uiAddVideoStreamButton.Text = "->";
+            this.uiAddVideoStreamButton.UseVisualStyleBackColor = true;
+            this.uiAddVideoStreamButton.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // uiDecreaseRoadCollectionWidthButton
+            // 
+            this.uiDecreaseRoadCollectionWidthButton.Location = new System.Drawing.Point(1210, 259);
+            this.uiDecreaseRoadCollectionWidthButton.Name = "uiDecreaseRoadCollectionWidthButton";
+            this.uiDecreaseRoadCollectionWidthButton.Size = new System.Drawing.Size(29, 24);
+            this.uiDecreaseRoadCollectionWidthButton.TabIndex = 9;
+            this.uiDecreaseRoadCollectionWidthButton.Text = "-";
+            this.uiDecreaseRoadCollectionWidthButton.UseVisualStyleBackColor = true;
+            this.uiDecreaseRoadCollectionWidthButton.Click += new System.EventHandler(this.uiDecreaseRoadCollectionWidthButton_Click);
+            // 
+            // uiIncreaseRoadCollectionWidthButton
+            // 
+            this.uiIncreaseRoadCollectionWidthButton.Location = new System.Drawing.Point(1245, 259);
+            this.uiIncreaseRoadCollectionWidthButton.Name = "uiIncreaseRoadCollectionWidthButton";
+            this.uiIncreaseRoadCollectionWidthButton.Size = new System.Drawing.Size(29, 24);
+            this.uiIncreaseRoadCollectionWidthButton.TabIndex = 8;
+            this.uiIncreaseRoadCollectionWidthButton.Text = "+";
+            this.uiIncreaseRoadCollectionWidthButton.UseVisualStyleBackColor = true;
+            this.uiIncreaseRoadCollectionWidthButton.Click += new System.EventHandler(this.uiIncreaseRoadCollectionWidthButton_Click);
             // 
             // videoStreamViewCollectionControl1
             // 
@@ -128,9 +152,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.videoStreamViewCollectionControl1.AutoScroll = true;
             this.videoStreamViewCollectionControl1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.videoStreamViewCollectionControl1.Location = new System.Drawing.Point(308, 3);
+            this.videoStreamViewCollectionControl1.Location = new System.Drawing.Point(84, 3);
             this.videoStreamViewCollectionControl1.Name = "videoStreamViewCollectionControl1";
-            this.videoStreamViewCollectionControl1.Size = new System.Drawing.Size(966, 271);
+            this.videoStreamViewCollectionControl1.Size = new System.Drawing.Size(1199, 253);
             this.videoStreamViewCollectionControl1.TabIndex = 4;
             // 
             // MainForm
@@ -160,8 +184,10 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private VideoStreamRoadCollectionControl videoStreamViewCollectionControl1;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button uiAddVideoStreamButton;
+        private System.Windows.Forms.Button uiDeleteVideoStreamButton;
+        private System.Windows.Forms.Button uiDecreaseRoadCollectionWidthButton;
+        private System.Windows.Forms.Button uiIncreaseRoadCollectionWidthButton;
     }
 }
 

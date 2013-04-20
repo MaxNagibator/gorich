@@ -25,6 +25,7 @@ namespace VideoEditor
             videoStreamRoadControl.SelectVideStreaViewControl += SelectVideStreaViewControl;
             uiMainPanel.Controls.Add(videoStreamRoadControl);
             uiMainPanel.Height = GetSumHeightAllVideoStreamViewControl();
+            SetMainPanelMinWidth();
         }
 
         private int GetSumHeightAllVideoStreamViewControl()
@@ -57,14 +58,20 @@ namespace VideoEditor
             ActiveVideoStreamRoadControl = null;
         }
 
-        private void uiIncreaseRoadCollectionWidthButton_Click(object sender, EventArgs e)
+        public void IncreaseRoadCollectionWidth()
         {
-            uiMainPanel.Width += uiMainPanel.Width;
+            uiMainPanel.Width += 1000;
         }
 
-        private void uiDecreaseRoadCollectionWidthButton_Click(object sender, EventArgs e)
+        public void DecreaseRoadCollection()
         {
+            SetMainPanelMinWidth();
+        }
 
+        private void SetMainPanelMinWidth()
+        {
+            var maxWidth = uiMainPanel.Controls.OfType<VideoStreamRoadControl>().Max(control => (control).Width);
+            uiMainPanel.Width = maxWidth;
         }
     }
 }

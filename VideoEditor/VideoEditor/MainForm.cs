@@ -115,5 +115,15 @@ namespace VideoEditor
         {
             videoStreamViewCollectionControl1.DeleteVideoStreamView();
         }
+
+        private void uiIncreaseRoadCollectionWidthButton_Click(object sender, EventArgs e)
+        {
+            videoStreamViewCollectionControl1.IncreaseRoadCollectionWidth();
+        }
+
+        private void uiDecreaseRoadCollectionWidthButton_Click(object sender, EventArgs e)
+        {
+            videoStreamViewCollectionControl1.DecreaseRoadCollection();
+        }
     }
 }
