@@ -62,7 +62,7 @@ namespace VideoEditor
                     VideoStream aviStream = aviManager.GetVideoStream();
                     aviStream.GetFrameOpen();
                     Bitmap bmp = aviStream.GetBitmap(aviStream.CountFrames/2);
-                    var videoStreamControl = new VideoStreamControl {Dock = DockStyle.Top};
+                    var videoStreamControl = new VideoStreamBrowseControl {Dock = DockStyle.Top};
                     videoStreamControl.SetFileName(GetCurrentFileName());
                     videoStreamControl.SetFrame(GetResizedBitmap(bmp, 50, 50));
                     videoStreamControl.VideoStream = aviStream;
@@ -81,12 +81,12 @@ namespace VideoEditor
         {
             foreach (var control in uiVideoListPanel.Controls)
             {
-                if(control is VideoStreamControl)
+                if(control is VideoStreamBrowseControl)
                 {
-                    ((VideoStreamControl) control).uiMainPanel.BackColor = Color.Lavender;
+                    ((VideoStreamBrowseControl) control).uiMainPanel.BackColor = Color.Lavender;
                 }
             }
-            ((VideoStreamControl) sender).uiMainPanel.BackColor = Color.Aquamarine;
+            ((VideoStreamBrowseControl) sender).uiMainPanel.BackColor = Color.Aquamarine;
             var videoStream = e.VideoStream;
             videoStream.GetFrameOpen();
             pictureBox1.Image = videoStream.GetBitmap(videoStream.CountFrames / 2);
@@ -108,7 +108,7 @@ namespace VideoEditor
 
         private void button1_Click(object sender, EventArgs e)
         {
-            videoStreamViewCollectionControl1.AddVideoStreamView(new VideoStreamViewControl());
+            videoStreamViewCollectionControl1.AddVideoStreamView(new VideoStreamRoadControl());
         }
 
         private void button2_Click(object sender, EventArgs e)
