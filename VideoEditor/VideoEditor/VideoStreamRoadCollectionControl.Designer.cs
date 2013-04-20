@@ -40,6 +40,7 @@
             this.uiTimePanel.Name = "uiTimePanel";
             this.uiTimePanel.Size = new System.Drawing.Size(1200, 24);
             this.uiTimePanel.TabIndex = 4;
+            this.uiTimePanel.Click += new System.EventHandler(this.uiTimePanel_Click);
             // 
             // uiMainPanel
             // 

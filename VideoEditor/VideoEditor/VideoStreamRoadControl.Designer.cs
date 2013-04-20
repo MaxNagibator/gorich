@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.uiMainPanel = new System.Windows.Forms.Panel();
-            this.videoStreamRoadPartControl = new VideoEditor.VideoStreamRoadPartControl();
+            this.button1 = new System.Windows.Forms.Button();
             this.uiMainPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -37,7 +37,7 @@
             // 
             this.uiMainPanel.AllowDrop = true;
             this.uiMainPanel.BackColor = System.Drawing.Color.Cornsilk;
-            this.uiMainPanel.Controls.Add(this.videoStreamRoadPartControl);
+            this.uiMainPanel.Controls.Add(this.button1);
             this.uiMainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.uiMainPanel.Location = new System.Drawing.Point(0, 0);
             this.uiMainPanel.Name = "uiMainPanel";
@@ -48,14 +48,15 @@
             this.uiMainPanel.DragEnter += new System.Windows.Forms.DragEventHandler(this.uiMainPanel_DragEnter);
             this.uiMainPanel.DragOver += new System.Windows.Forms.DragEventHandler(this.uiMainPanel_DragOver);
             // 
-            // videoStreamRoadPartControl
+            // button1
             // 
-            this.videoStreamRoadPartControl.BackColor = System.Drawing.Color.LimeGreen;
-            this.videoStreamRoadPartControl.Location = new System.Drawing.Point(500, 0);
-            this.videoStreamRoadPartControl.Name = "videoStreamRoadPartControl";
-            this.videoStreamRoadPartControl.Size = new System.Drawing.Size(217, 75);
-            this.videoStreamRoadPartControl.TabIndex = 1;
-            this.videoStreamRoadPartControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.videoStreamRoadPartControl_MouseDown);
+            this.button1.Location = new System.Drawing.Point(3, 49);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(246, 23);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // VideoStreamRoadControl
             // 
@@ -71,6 +72,6 @@
         #endregion
 
         private System.Windows.Forms.Panel uiMainPanel;
-        private VideoStreamRoadPartControl videoStreamRoadPartControl;
+        private System.Windows.Forms.Button button1;
     }
 }
