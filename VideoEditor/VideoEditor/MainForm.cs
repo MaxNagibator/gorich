@@ -93,9 +93,7 @@ namespace VideoEditor
             _selectedVideoStreamBrowseControl = ((VideoStreamBrowseControl) sender);
             ((VideoStreamBrowseControl) sender).uiMainPanel.BackColor = Color.Aquamarine;
             var videoStream = e.VideoStream;
-            videoStream.GetFrameOpen();
             pictureBox1.Image = videoStream.GetBitmap(videoStream.CountFrames/2);
-            videoStream.GetFrameClose();
         }
 
         private Bitmap GetResizedBitmap(Bitmap bmp, int width, int height)
