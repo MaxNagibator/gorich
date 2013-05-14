@@ -35,6 +35,7 @@
             // uiRightCoordinateLabel
             // 
             this.uiRightCoordinateLabel.AutoSize = true;
+            this.uiRightCoordinateLabel.BackColor = System.Drawing.Color.DarkGreen;
             this.uiRightCoordinateLabel.Dock = System.Windows.Forms.DockStyle.Right;
             this.uiRightCoordinateLabel.Location = new System.Drawing.Point(207, 0);
             this.uiRightCoordinateLabel.Name = "uiRightCoordinateLabel";
@@ -45,6 +46,7 @@
             // uiLeftCoordinateLabel
             // 
             this.uiLeftCoordinateLabel.AutoSize = true;
+            this.uiLeftCoordinateLabel.BackColor = System.Drawing.Color.DarkGreen;
             this.uiLeftCoordinateLabel.Dock = System.Windows.Forms.DockStyle.Left;
             this.uiLeftCoordinateLabel.Location = new System.Drawing.Point(0, 0);
             this.uiLeftCoordinateLabel.Name = "uiLeftCoordinateLabel";
@@ -61,6 +63,7 @@
             this.Controls.Add(this.uiLeftCoordinateLabel);
             this.Name = "VideoStreamRoadPartControl";
             this.Size = new System.Drawing.Size(217, 75);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.VideoStreamRoadPartControl_Paint);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.VideoStreamRoadPartControl_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.VideoStreamRoadPartControl_MouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.VideoStreamRoadPartControl_MouseUp);

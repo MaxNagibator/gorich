@@ -24,7 +24,7 @@ namespace VideoEditor
             if (fileName != null)
             {
                 uiAviFileNameTextBox.Text = fileName;
-                ShowFrame();
+                AddFile();
             }
         }
 
@@ -52,7 +52,7 @@ namespace VideoEditor
             return uiAviFileNameTextBox.Text.Substring(uiAviFileNameTextBox.Text.LastIndexOf("\\") + 1, uiAviFileNameTextBox.Text.Length - uiAviFileNameTextBox.Text.LastIndexOf("\\")-1);
         }
 
-        private void ShowFrame()
+        private void AddFile()
         {
             if (System.IO.File.Exists(uiAviFileNameTextBox.Text))
             {
@@ -68,6 +68,12 @@ namespace VideoEditor
                     videoStreamControl.VideoStream = aviStream;
                     videoStreamControl.SelectVideoStream += SelectVideoStreamControl;
                     uiVideoListPanel.Controls.Add(videoStreamControl);
+                    _selectedVideoStreamBrowseControl = videoStreamControl;
+                    foreach (VideoStreamBrowseControl browseControl in uiVideoListPanel.Controls.OfType<VideoStreamBrowseControl>())
+                    {
+                        (browseControl).uiMainPanel.BackColor = Color.Lavender;
+                    }
+                    videoStreamControl.uiMainPanel.BackColor = Color.Aquamarine;
                     aviManager.Close();
                 }
                 catch (Exception ex)
@@ -77,19 +83,18 @@ namespace VideoEditor
             }
         }
 
+        private VideoStreamBrowseControl _selectedVideoStreamBrowseControl;
         private void SelectVideoStreamControl(object sender, VideoStreamEventArgs e)
         {
-            foreach (var control in uiVideoListPanel.Controls)
+            foreach (VideoStreamBrowseControl browseControl in uiVideoListPanel.Controls.OfType<VideoStreamBrowseControl>())
             {
-                if(control is VideoStreamBrowseControl)
-                {
-                    ((VideoStreamBrowseControl) control).uiMainPanel.BackColor = Color.Lavender;
-                }
+                (browseControl).uiMainPanel.BackColor = Color.Lavender;
             }
+            _selectedVideoStreamBrowseControl = ((VideoStreamBrowseControl) sender);
             ((VideoStreamBrowseControl) sender).uiMainPanel.BackColor = Color.Aquamarine;
             var videoStream = e.VideoStream;
             videoStream.GetFrameOpen();
-            pictureBox1.Image = videoStream.GetBitmap(videoStream.CountFrames / 2);
+            pictureBox1.Image = videoStream.GetBitmap(videoStream.CountFrames/2);
             videoStream.GetFrameClose();
         }
 
@@ -108,7 +113,10 @@ namespace VideoEditor
 
         private void button1_Click(object sender, EventArgs e)
         {
-            videoStreamViewCollectionControl1.AddVideoStreamView(new VideoStreamRoadControl());
+            if (_selectedVideoStreamBrowseControl != null)
+            {
+                videoStreamViewCollectionControl1.AddVideoStreamView(new VideoStreamRoadControl(_selectedVideoStreamBrowseControl.VideoStream));
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)

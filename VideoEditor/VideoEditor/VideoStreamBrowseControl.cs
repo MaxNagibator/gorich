@@ -14,7 +14,7 @@ namespace VideoEditor
     public partial class VideoStreamBrowseControl : UserControl
     {
         public Guid Guid { get; set; }
-
+        public bool IsSelected { get; set; }
         public VideoStream VideoStream { get; set; }
 
         public VideoStreamBrowseControl()

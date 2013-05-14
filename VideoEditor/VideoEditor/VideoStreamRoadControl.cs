@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using AviFile;
 
@@ -22,14 +17,16 @@ namespace VideoEditor
         private bool _first = true;
         public bool IsMoving { get; set; }
 
-        public VideoStreamRoadControl()
+        public VideoStreamRoadControl(VideoStream videoStream)
         {
             InitializeComponent();
+            VideoStream = videoStream;
         }
 
         public void AddVideoStreamRoadPart(VideoStreamRoadPartControl videoStreamRoadPartControl)
         {
             videoStreamRoadPartControl.MouseDown += videoStreamRoadPartControl_MouseDown;
+            videoStreamRoadPartControl.MouseMove += videoStreamRoadPartControl_MouseEnter;
             uiMainPanel.Controls.Add(videoStreamRoadPartControl);
         }
 
@@ -38,8 +35,8 @@ namespace VideoEditor
             if (_selectedVideoStreamRoadPartControl.SelectedPart == null) return;
             if (_selectedVideoStreamRoadPartControl.SelectedPartX1 > 0)
             {
-                var videoStreamRoadPartControl = new VideoStreamRoadPartControl
-                             {
+                var videoStreamRoadPartControl = new VideoStreamRoadPartControl()
+                                                     {
                                  Location = new Point(_selectedVideoStreamRoadPartControl.Location.X, 0),
                                  Width = _selectedVideoStreamRoadPartControl.SelectedPartX1
                              };
@@ -48,8 +45,8 @@ namespace VideoEditor
             if (_selectedVideoStreamRoadPartControl.SelectedPartX2 -
                                      _selectedVideoStreamRoadPartControl.SelectedPartX1 > 0)
             {
-                var videoStreamRoadPartControl = new VideoStreamRoadPartControl
-                             {
+                var videoStreamRoadPartControl = new VideoStreamRoadPartControl()
+                                                     {
                                  Location =
                                      new Point(
                                      _selectedVideoStreamRoadPartControl.Location.X +
@@ -63,8 +60,8 @@ namespace VideoEditor
             if (_selectedVideoStreamRoadPartControl.Width -
                                      _selectedVideoStreamRoadPartControl.SelectedPartX2 > 0)
             {
-                var streamRoadPartControl = new VideoStreamRoadPartControl
-                             {
+                var streamRoadPartControl = new VideoStreamRoadPartControl()
+                                                {
                                  Location =
                                      new Point(
                                      _selectedVideoStreamRoadPartControl.Location.X +
@@ -144,6 +141,21 @@ namespace VideoEditor
             uiMainPanel.BackColor = Color.Cornsilk;
         }
 
+
+        private void videoStreamRoadPartControl_MouseEnter(object sender, MouseEventArgs e)
+        {
+            var a = VideoStream.GetBitmap(e.X);
+            var videoStreamEventArgs = new FrameEventArgs { Frame = a};
+            FireChangeImageRoadPartControl(videoStreamEventArgs);
+        }
+        public void FireChangeImageRoadPartControl(FrameEventArgs e)
+        {
+            EventHandler<FrameEventArgs> handler = ChangeImageRoadPartControl;
+            if (handler != null) handler(this, e);
+        }
+
+        public event EventHandler<FrameEventArgs> ChangeImageRoadPartControl;
+
         private void uiMainPanel_Click(object sender, EventArgs e)
         {
             var videoStreamEventArgs = new VideoStreamEventArgs {VideoStream = VideoStream};
@@ -152,15 +164,20 @@ namespace VideoEditor
 
         public void FireSelectVideoStreamViewControl(VideoStreamEventArgs e)
         {
-            EventHandler<EventArgs> handler = SelectVideStreaViewControl;
+            EventHandler<VideoStreamEventArgs> handler = SelectVideoStreamViewControl;
             if (handler != null) handler(this, e);
         }
 
-        public event EventHandler<EventArgs> SelectVideStreaViewControl;
+        public event EventHandler<VideoStreamEventArgs> SelectVideoStreamViewControl;
 
         private void button1_Click(object sender, EventArgs e)
         {
             SplitVideoStreamPart();
         }
+    }
+
+    public class FrameEventArgs : EventArgs
+    {
+        public Bitmap Frame { get; set; }
     }
 }

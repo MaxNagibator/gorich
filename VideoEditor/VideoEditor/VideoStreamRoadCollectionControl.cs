@@ -21,20 +21,22 @@ namespace VideoEditor
 
         public void AddVideoStreamView(VideoStreamRoadControl videoStreamRoadControl)
         {
+            videoStreamRoadControl.Width = videoStreamRoadControl.VideoStream.CountFrames;
             videoStreamRoadControl.Location = new Point(0,GetSumHeightAllVideoStreamViewControl());
-            videoStreamRoadControl.SelectVideStreaViewControl += SelectVideStreaViewControl;
-            videoStreamRoadControl.AddVideoStreamRoadPart(new VideoStreamRoadPartControl());
+            videoStreamRoadControl.SelectVideoStreamViewControl += SelectVideoStreamViewControl;
+            videoStreamRoadControl.AddVideoStreamRoadPart(new VideoStreamRoadPartControl(videoStreamRoadControl.VideoStream));
+            videoStreamRoadControl.ChangeImageRoadPartControl += ChangeImageRoadPartControl;
             uiMainPanel.Controls.Add(videoStreamRoadControl);
             uiMainPanel.Height = GetSumHeightAllVideoStreamViewControl();
             SetMainPanelMinWidth();
         }
-        
+
         private int GetSumHeightAllVideoStreamViewControl()
         {
             return uiMainPanel.Controls.OfType<VideoStreamRoadControl>().Sum(control => (control).Height);
         }
 
-        private void SelectVideStreaViewControl(object sender, EventArgs e)
+        private void SelectVideoStreamViewControl(object sender, EventArgs e)
         {
             ActiveVideoStreamRoadControl = (VideoStreamRoadControl)sender;
             foreach (var control in uiMainPanel.Controls.OfType<VideoStreamRoadControl>())
@@ -42,6 +44,11 @@ namespace VideoEditor
                 (control).SetInactive();
             }
             ActiveVideoStreamRoadControl.SetActive();
+        }
+
+        private void ChangeImageRoadPartControl(object sender, FrameEventArgs e)
+        {
+            pictureBox1.Image = e.Frame;
         }
 
         public void DeleteVideoStreamView()

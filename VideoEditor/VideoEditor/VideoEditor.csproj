@@ -32,7 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AviFile, Version=1.0.4852.31483, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="AviFile, Version=1.0.4852.39532, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>libs\AviFile.dll</HintPath>
     </Reference>

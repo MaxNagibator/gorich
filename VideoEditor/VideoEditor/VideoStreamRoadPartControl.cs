@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using AviFile;
 
@@ -13,6 +7,7 @@ namespace VideoEditor
 {
     public partial class VideoStreamRoadPartControl : UserControl
     {
+        public VideoStream VideoStream { get; set; }
         public VideoStreamRoadPartControl()
         {
             InitializeComponent();
@@ -21,8 +16,16 @@ namespace VideoEditor
             RightCoordinate = Width;
         }
 
-        public VideoStream VideoStream { get; set; }
-        private const int MOVING_AREA_HEIGHT = 20;
+        public VideoStreamRoadPartControl(VideoStream videoStream)
+        {
+            InitializeComponent();
+            Width = videoStream.CountFrames;
+            VideoStream = videoStream;
+            MoveEnable = true;
+            LeftCoordinate = 0;
+            RightCoordinate = Width;
+        }
+        private const int MOVING_AREA_HEIGHT = 25;
 
         public int SelectedPartX1 { get;set;}
         public int SelectedPartX2 { get; set; }
@@ -91,6 +94,24 @@ namespace VideoEditor
             SelectedPartX2 = SelectedPart.Width + SelectedPart.Location.X;
             _isselected = false;
             MoveEnable = true;
+        }
+
+        private void VideoStreamRoadPartControl_Paint(object sender, PaintEventArgs e)
+        {
+            var p = sender as VideoStreamRoadPartControl;
+            var g = e.Graphics;
+
+            //g.FillRectangle(new SolidBrush(Color.FromArgb(0, Color.Black)), p.DisplayRectangle);
+
+            var points = new Point[4];
+            points[0] = new Point(0, 0);
+            points[1] = new Point(p.Width, 0);
+            points[2] = new Point(p.Width, MOVING_AREA_HEIGHT);
+            points[3] = new Point(0, MOVING_AREA_HEIGHT);
+
+            Brush brush = new SolidBrush(Color.DarkGreen);
+
+            g.FillPolygon(brush, points);
         }
     }
 }
