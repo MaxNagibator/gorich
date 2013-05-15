@@ -1,4 +1,4 @@
 gorich
 ======
 
-diplom gorichenko anna
+huiten'ka for gorichenko anna

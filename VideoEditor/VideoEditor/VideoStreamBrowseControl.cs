@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using AviFile;
 
@@ -50,10 +44,5 @@ namespace VideoEditor
         }
 
         public event EventHandler<VideoStreamEventArgs> SelectVideoStream;
-    }
-
-    public class VideoStreamEventArgs : EventArgs
-    {
-        public VideoStream VideoStream { get; set; }
     }
 }

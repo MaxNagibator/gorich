@@ -7,29 +7,13 @@ namespace VideoEditor
 {
     public partial class VideoStreamRoadPartControl : UserControl
     {
-        public VideoStream VideoStream { get; set; }
-        public VideoStreamRoadPartControl()
-        {
-            InitializeComponent();
-            MoveEnable = true;
-            LeftCoordinate = 0;
-            RightCoordinate = Width;
-        }
-
-        public VideoStreamRoadPartControl(VideoStream videoStream)
-        {
-            InitializeComponent();
-            Width = videoStream.CountFrames;
-            VideoStream = videoStream;
-            MoveEnable = true;
-            LeftCoordinate = 0;
-            RightCoordinate = Width;
-        }
+        private readonly Color _infoPanelColor = Color.DarkGreen;
+        private readonly Color _selectedColor = Color.Orange;
         private const int MOVING_AREA_HEIGHT = 25;
-
-        public int SelectedPartX1 { get;set;}
+        private bool _isSelected;
+        public VideoStream VideoStream { get; set; }
+        public int SelectedPartX1 { get; set; }
         public int SelectedPartX2 { get; set; }
-        private bool _isselected;
         public Panel SelectedPart { get; set; }
         public bool MoveEnable { get; set; }
 
@@ -45,20 +29,44 @@ namespace VideoEditor
             set { uiLeftCoordinateLabel.Text = value.ToString(); }
         }
 
+        public VideoStreamRoadPartControl()
+        {
+            InitializeComponent();
+            MoveEnable = true;
+            LeftCoordinate = 0;
+            RightCoordinate = Width;
+        }
+
+        public VideoStreamRoadPartControl(VideoStream videoStream)
+        {
+            InitializeComponent();
+            uiLeftCoordinateLabel.BackColor = _infoPanelColor;
+            uiRightCoordinateLabel.BackColor = _infoPanelColor;
+            Width = videoStream.CountFrames;
+            VideoStream = videoStream;
+            MoveEnable = true;
+            LeftCoordinate = 0;
+            RightCoordinate = Width;
+        }
         private void VideoStreamRoadPartControl_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Y > MOVING_AREA_HEIGHT)
+            if (IsMovingArea(e))
             {
                 MoveEnable = false;
                 StartSelect(e.X);
             }
         }
 
+        private bool IsMovingArea(MouseEventArgs mouseEventArgs)
+        {
+            return mouseEventArgs.Y > MOVING_AREA_HEIGHT;
+        }
+
         private void StartSelect(int x)
         {
-            _isselected = true;
+            _isSelected = true;
             SelectClear();
-            SelectedPart = new Panel { Tag = "SelectedArea", BackColor = Color.Red, Location = new Point(x, MOVING_AREA_HEIGHT) };
+            SelectedPart = new Panel { Tag = "SelectedArea", BackColor = _selectedColor, Location = new Point(x, MOVING_AREA_HEIGHT) };
             Controls.Add(SelectedPart);
             SelectedPartX1 = x;
             SelectedPartX2 = x;
@@ -71,7 +79,7 @@ namespace VideoEditor
 
         private void VideoStreamRoadPartControl_MouseMove(object sender, MouseEventArgs e)
         {
-            if (_isselected)
+            if (_isSelected)
             {
                 SelectedPartX2 = e.X;
                 SelectedPart.Location = new Point(Math.Min(SelectedPartX1, SelectedPartX2), MOVING_AREA_HEIGHT);
@@ -92,7 +100,7 @@ namespace VideoEditor
             }
             SelectedPartX1 = SelectedPart.Location.X;
             SelectedPartX2 = SelectedPart.Width + SelectedPart.Location.X;
-            _isselected = false;
+            _isSelected = false;
             MoveEnable = true;
         }
 
@@ -100,17 +108,13 @@ namespace VideoEditor
         {
             var p = sender as VideoStreamRoadPartControl;
             var g = e.Graphics;
-
-            //g.FillRectangle(new SolidBrush(Color.FromArgb(0, Color.Black)), p.DisplayRectangle);
-
+            if (p == null) return;
             var points = new Point[4];
             points[0] = new Point(0, 0);
             points[1] = new Point(p.Width, 0);
             points[2] = new Point(p.Width, MOVING_AREA_HEIGHT);
             points[3] = new Point(0, MOVING_AREA_HEIGHT);
-
-            Brush brush = new SolidBrush(Color.DarkGreen);
-
+            Brush brush = new SolidBrush(_infoPanelColor);
             g.FillPolygon(brush, points);
         }
     }

@@ -8,13 +8,14 @@ namespace VideoEditor
 {
     public partial class VideoStreamRoadControl : UserControl
     {
+        private VideoStreamRoadPartControl _selectedVideoStreamRoadPartControl;
+        private int _dx;
+        private bool _first = true;
+
         public Guid Guid { get; set; }
 
         public VideoStream VideoStream { get; set; }
 
-        private VideoStreamRoadPartControl _selectedVideoStreamRoadPartControl;
-        private int _dx;
-        private bool _first = true;
         public bool IsMoving { get; set; }
 
         public VideoStreamRoadControl(VideoStream videoStream)
@@ -33,64 +34,69 @@ namespace VideoEditor
         public void SplitVideoStreamPart()
         {
             if (_selectedVideoStreamRoadPartControl.SelectedPart == null) return;
-            if (_selectedVideoStreamRoadPartControl.SelectedPartX1 > 0)
-            {
-                var videoStreamRoadPartControl = new VideoStreamRoadPartControl()
-                                                     {
-                                 Location = new Point(_selectedVideoStreamRoadPartControl.Location.X, 0),
-                                 Width = _selectedVideoStreamRoadPartControl.SelectedPartX1
-                             };
-                AddVideoStreamRoadPart(videoStreamRoadPartControl);
-            }
-            if (_selectedVideoStreamRoadPartControl.SelectedPartX2 -
-                                     _selectedVideoStreamRoadPartControl.SelectedPartX1 > 0)
-            {
-                var videoStreamRoadPartControl = new VideoStreamRoadPartControl()
-                                                     {
-                                 Location =
-                                     new Point(
-                                     _selectedVideoStreamRoadPartControl.Location.X +
-                                     _selectedVideoStreamRoadPartControl.SelectedPartX1, 0),
-                                 Width =
-                                     _selectedVideoStreamRoadPartControl.SelectedPartX2 -
-                                     _selectedVideoStreamRoadPartControl.SelectedPartX1
-                             };
-                AddVideoStreamRoadPart(videoStreamRoadPartControl);
-            }
-            if (_selectedVideoStreamRoadPartControl.Width -
-                                     _selectedVideoStreamRoadPartControl.SelectedPartX2 > 0)
-            {
-                var streamRoadPartControl = new VideoStreamRoadPartControl()
-                                                {
-                                 Location =
-                                     new Point(
-                                     _selectedVideoStreamRoadPartControl.Location.X +
-                                     _selectedVideoStreamRoadPartControl.SelectedPartX2, 0),
-                                 Width =
-                                     _selectedVideoStreamRoadPartControl.Width -
-                                     _selectedVideoStreamRoadPartControl.SelectedPartX2
-                             };
-                AddVideoStreamRoadPart(streamRoadPartControl);
-            }
+            CreateFirstPart();
+            CreateMiddlePart();
+            CreateLastPart();
             uiMainPanel.Controls.Remove(_selectedVideoStreamRoadPartControl);
         }
 
-        private void uiMainPanel_DragEnter(object sender, DragEventArgs e)
+        private void CreateMiddlePart()
         {
+            if (_selectedVideoStreamRoadPartControl.SelectedPartX2 -
+                _selectedVideoStreamRoadPartControl.SelectedPartX1 <= 0) return;
+            var videoStreamRoadPartControl = new VideoStreamRoadPartControl
+                                                 {
+                                                     Location =
+                                                         new Point(
+                                                         _selectedVideoStreamRoadPartControl.Location.X +
+                                                         _selectedVideoStreamRoadPartControl.SelectedPartX1, 0),
+                                                     Width =
+                                                         _selectedVideoStreamRoadPartControl.SelectedPartX2 -
+                                                         _selectedVideoStreamRoadPartControl.SelectedPartX1
+                                                 };
+            AddVideoStreamRoadPart(videoStreamRoadPartControl);
+        }
 
+        private void CreateFirstPart()
+        {
+            if (_selectedVideoStreamRoadPartControl.SelectedPartX1 <= 0) return;
+            var videoStreamRoadPartControl = new VideoStreamRoadPartControl
+                                                 {
+                                                     Location =
+                                                         new Point(_selectedVideoStreamRoadPartControl.Location.X, 0),
+                                                     Width = _selectedVideoStreamRoadPartControl.SelectedPartX1
+                                                 };
+            AddVideoStreamRoadPart(videoStreamRoadPartControl);
+        }
+
+        private void CreateLastPart()
+        {
+            if (_selectedVideoStreamRoadPartControl.Width -
+                _selectedVideoStreamRoadPartControl.SelectedPartX2 <= 0) return;
+            var streamRoadPartControl = new VideoStreamRoadPartControl
+                                            {
+                                                Location =
+                                                    new Point(
+                                                    _selectedVideoStreamRoadPartControl.Location.X +
+                                                    _selectedVideoStreamRoadPartControl.SelectedPartX2, 0),
+                                                Width =
+                                                    _selectedVideoStreamRoadPartControl.Width -
+                                                    _selectedVideoStreamRoadPartControl.SelectedPartX2
+                                            };
+            AddVideoStreamRoadPart(streamRoadPartControl);
         }
 
         private void uiMainPanel_DragDrop(object sender, DragEventArgs e)
         {
             _selectedVideoStreamRoadPartControl.Location = new Point(_selectedVideoStreamRoadPartControl.Location.X,
-                                                            _selectedVideoStreamRoadPartControl.Location.Y);
+                                                                     _selectedVideoStreamRoadPartControl.Location.Y);
             IsMoving = false;
         }
 
 
         private void videoStreamRoadPartControl_MouseDown(object sender, MouseEventArgs e)
         {
-            _selectedVideoStreamRoadPartControl = (VideoStreamRoadPartControl)sender;
+            _selectedVideoStreamRoadPartControl = (VideoStreamRoadPartControl) sender;
             var videoStreamEventArgs = new VideoStreamEventArgs {VideoStream = VideoStream};
             FireSelectVideoStreamViewControl(videoStreamEventArgs);
             if (_selectedVideoStreamRoadPartControl.MoveEnable)
@@ -115,11 +121,13 @@ namespace VideoEditor
             {
                 move = _selectedVideoStreamRoadPartControl.Location.X + e.X - _dx;
             }
-            _selectedVideoStreamRoadPartControl.Location = new Point(move, _selectedVideoStreamRoadPartControl.Location.Y);
+            _selectedVideoStreamRoadPartControl.Location = new Point(move,
+                                                                     _selectedVideoStreamRoadPartControl.Location.Y);
             _dx = e.X;
             e.Effect = DragDropEffects.Move;
             var leftCoordinate = _selectedVideoStreamRoadPartControl.Location.X;
-            var rightCoordinate = _selectedVideoStreamRoadPartControl.Location.X + _selectedVideoStreamRoadPartControl.Width;
+            var rightCoordinate = _selectedVideoStreamRoadPartControl.Location.X +
+                                  _selectedVideoStreamRoadPartControl.Width;
             _selectedVideoStreamRoadPartControl.LeftCoordinate = leftCoordinate;
             _selectedVideoStreamRoadPartControl.RightCoordinate = rightCoordinate;
             CheckRoadSize();
@@ -127,7 +135,9 @@ namespace VideoEditor
 
         private void CheckRoadSize()
         {
-            int max = uiMainPanel.Controls.OfType<VideoStreamRoadPartControl>().Select(control => (control).RightCoordinate).Concat(new[] {0}).Max();
+            int max =
+                uiMainPanel.Controls.OfType<VideoStreamRoadPartControl>().Select(control => (control).RightCoordinate).
+                    Concat(new[] {0}).Max();
             Width = max;
         }
 
@@ -145,9 +155,10 @@ namespace VideoEditor
         private void videoStreamRoadPartControl_MouseEnter(object sender, MouseEventArgs e)
         {
             var a = VideoStream.GetBitmap(e.X);
-            var videoStreamEventArgs = new FrameEventArgs { Frame = a};
+            var videoStreamEventArgs = new FrameEventArgs {Frame = a};
             FireChangeImageRoadPartControl(videoStreamEventArgs);
         }
+
         public void FireChangeImageRoadPartControl(FrameEventArgs e)
         {
             EventHandler<FrameEventArgs> handler = ChangeImageRoadPartControl;
@@ -174,10 +185,5 @@ namespace VideoEditor
         {
             SplitVideoStreamPart();
         }
-    }
-
-    public class FrameEventArgs : EventArgs
-    {
-        public Bitmap Frame { get; set; }
     }
 }

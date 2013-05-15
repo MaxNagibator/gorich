@@ -45,7 +45,6 @@
             this.uiMainPanel.TabIndex = 6;
             this.uiMainPanel.Click += new System.EventHandler(this.uiMainPanel_Click);
             this.uiMainPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.uiMainPanel_DragDrop);
-            this.uiMainPanel.DragEnter += new System.Windows.Forms.DragEventHandler(this.uiMainPanel_DragEnter);
             this.uiMainPanel.DragOver += new System.Windows.Forms.DragEventHandler(this.uiMainPanel_DragOver);
             // 
             // button1

@@ -33,10 +33,10 @@
             this.uiVideoListPanel = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.uiDeleteVideoStreamButton = new System.Windows.Forms.Button();
-            this.uiAddVideoStreamButton = new System.Windows.Forms.Button();
             this.uiDecreaseRoadCollectionWidthButton = new System.Windows.Forms.Button();
             this.uiIncreaseRoadCollectionWidthButton = new System.Windows.Forms.Button();
+            this.uiDeleteVideoStreamButton = new System.Windows.Forms.Button();
+            this.uiAddVideoStreamButton = new System.Windows.Forms.Button();
             this.videoStreamViewCollectionControl1 = new VideoEditor.VideoStreamRoadCollectionControl();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -104,26 +104,6 @@
             this.splitContainer1.SplitterDistance = 312;
             this.splitContainer1.TabIndex = 5;
             // 
-            // uiDeleteVideoStreamButton
-            // 
-            this.uiDeleteVideoStreamButton.Location = new System.Drawing.Point(3, 32);
-            this.uiDeleteVideoStreamButton.Name = "uiDeleteVideoStreamButton";
-            this.uiDeleteVideoStreamButton.Size = new System.Drawing.Size(75, 23);
-            this.uiDeleteVideoStreamButton.TabIndex = 5;
-            this.uiDeleteVideoStreamButton.Text = "delete";
-            this.uiDeleteVideoStreamButton.UseVisualStyleBackColor = true;
-            this.uiDeleteVideoStreamButton.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // uiAddVideoStreamButton
-            // 
-            this.uiAddVideoStreamButton.Location = new System.Drawing.Point(3, 3);
-            this.uiAddVideoStreamButton.Name = "uiAddVideoStreamButton";
-            this.uiAddVideoStreamButton.Size = new System.Drawing.Size(75, 23);
-            this.uiAddVideoStreamButton.TabIndex = 4;
-            this.uiAddVideoStreamButton.Text = "->";
-            this.uiAddVideoStreamButton.UseVisualStyleBackColor = true;
-            this.uiAddVideoStreamButton.Click += new System.EventHandler(this.button1_Click);
-            // 
             // uiDecreaseRoadCollectionWidthButton
             // 
             this.uiDecreaseRoadCollectionWidthButton.Location = new System.Drawing.Point(1210, 259);
@@ -143,6 +123,26 @@
             this.uiIncreaseRoadCollectionWidthButton.Text = "+";
             this.uiIncreaseRoadCollectionWidthButton.UseVisualStyleBackColor = true;
             this.uiIncreaseRoadCollectionWidthButton.Click += new System.EventHandler(this.uiIncreaseRoadCollectionWidthButton_Click);
+            // 
+            // uiDeleteVideoStreamButton
+            // 
+            this.uiDeleteVideoStreamButton.Location = new System.Drawing.Point(3, 32);
+            this.uiDeleteVideoStreamButton.Name = "uiDeleteVideoStreamButton";
+            this.uiDeleteVideoStreamButton.Size = new System.Drawing.Size(75, 23);
+            this.uiDeleteVideoStreamButton.TabIndex = 5;
+            this.uiDeleteVideoStreamButton.Text = "delete";
+            this.uiDeleteVideoStreamButton.UseVisualStyleBackColor = true;
+            this.uiDeleteVideoStreamButton.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // uiAddVideoStreamButton
+            // 
+            this.uiAddVideoStreamButton.Location = new System.Drawing.Point(3, 3);
+            this.uiAddVideoStreamButton.Name = "uiAddVideoStreamButton";
+            this.uiAddVideoStreamButton.Size = new System.Drawing.Size(75, 23);
+            this.uiAddVideoStreamButton.TabIndex = 4;
+            this.uiAddVideoStreamButton.Text = "->";
+            this.uiAddVideoStreamButton.UseVisualStyleBackColor = true;
+            this.uiAddVideoStreamButton.Click += new System.EventHandler(this.button1_Click);
             // 
             // videoStreamViewCollectionControl1
             // 
