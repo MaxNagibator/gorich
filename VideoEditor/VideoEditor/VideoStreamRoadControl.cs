@@ -9,14 +9,15 @@ namespace VideoEditor
     public partial class VideoStreamRoadControl : UserControl
     {
         private VideoStreamRoadPartControl _selectedVideoStreamRoadPartControl;
-        private int _dx;
-        private bool _first = true;
+        private int _prevMouseLocationX;
+        private bool _firstStepMoving = true;
 
         public Guid Guid { get; set; }
-
         public VideoStream VideoStream { get; set; }
-
         public bool IsMoving { get; set; }
+        public event EventHandler<FrameEventArgs> ChangeImageRoadPartControl;
+        public event EventHandler<VideoStreamEventArgs> SelectVideoStreamViewControl;
+
 
         public VideoStreamRoadControl(VideoStream videoStream)
         {
@@ -102,7 +103,7 @@ namespace VideoEditor
             if (_selectedVideoStreamRoadPartControl.MoveEnable)
             {
                 IsMoving = true;
-                _first = true;
+                _firstStepMoving = true;
                 _selectedVideoStreamRoadPartControl.SelectClear();
                 _selectedVideoStreamRoadPartControl.DoDragDrop(_selectedVideoStreamRoadPartControl, DragDropEffects.All);
             }
@@ -112,32 +113,36 @@ namespace VideoEditor
         {
             if (IsMoving == false) return;
             int move;
-            if (_first)
+            if (_firstStepMoving)
             {
-                move = _selectedVideoStreamRoadPartControl.Location.X;
-                _first = false;
+                move = 0;
+                _firstStepMoving = false;
             }
             else
             {
-                move = _selectedVideoStreamRoadPartControl.Location.X + e.X - _dx;
+                move =  e.X - _prevMouseLocationX;
             }
-            _selectedVideoStreamRoadPartControl.Location = new Point(move,
+            _selectedVideoStreamRoadPartControl.Location = new Point(_selectedVideoStreamRoadPartControl.Location.X+move,
                                                                      _selectedVideoStreamRoadPartControl.Location.Y);
-            _dx = e.X;
+            _prevMouseLocationX = e.X;
             e.Effect = DragDropEffects.Move;
+            UpdateControlInfo();
+            CheckRoadSize();
+        }
+
+        private void UpdateControlInfo()
+        {
             var leftCoordinate = _selectedVideoStreamRoadPartControl.Location.X;
             var rightCoordinate = _selectedVideoStreamRoadPartControl.Location.X +
                                   _selectedVideoStreamRoadPartControl.Width;
             _selectedVideoStreamRoadPartControl.LeftCoordinate = leftCoordinate;
             _selectedVideoStreamRoadPartControl.RightCoordinate = rightCoordinate;
-            CheckRoadSize();
         }
 
         private void CheckRoadSize()
         {
-            int max =
-                uiMainPanel.Controls.OfType<VideoStreamRoadPartControl>().Select(control => (control).RightCoordinate).
-                    Concat(new[] {0}).Max();
+            int max = uiMainPanel.Controls.OfType<VideoStreamRoadPartControl>()
+                .Select(control => (control).RightCoordinate).Concat(new[] {0}).Max();
             Width = max;
         }
 
@@ -151,12 +156,17 @@ namespace VideoEditor
             uiMainPanel.BackColor = Color.Cornsilk;
         }
 
-
         private void videoStreamRoadPartControl_MouseEnter(object sender, MouseEventArgs e)
         {
-            var a = VideoStream.GetBitmap(e.X);
-            var videoStreamEventArgs = new FrameEventArgs {Frame = a};
+            var frame = VideoStream.GetBitmap(e.X);
+            var videoStreamEventArgs = new FrameEventArgs {Frame = frame};
             FireChangeImageRoadPartControl(videoStreamEventArgs);
+        }
+
+        private void uiMainPanel_Click(object sender, EventArgs e)
+        {
+            var videoStreamEventArgs = new VideoStreamEventArgs {VideoStream = VideoStream};
+            FireSelectVideoStreamViewControl(videoStreamEventArgs);
         }
 
         public void FireChangeImageRoadPartControl(FrameEventArgs e)
@@ -165,21 +175,11 @@ namespace VideoEditor
             if (handler != null) handler(this, e);
         }
 
-        public event EventHandler<FrameEventArgs> ChangeImageRoadPartControl;
-
-        private void uiMainPanel_Click(object sender, EventArgs e)
-        {
-            var videoStreamEventArgs = new VideoStreamEventArgs {VideoStream = VideoStream};
-            FireSelectVideoStreamViewControl(videoStreamEventArgs);
-        }
-
         public void FireSelectVideoStreamViewControl(VideoStreamEventArgs e)
         {
             EventHandler<VideoStreamEventArgs> handler = SelectVideoStreamViewControl;
             if (handler != null) handler(this, e);
         }
-
-        public event EventHandler<VideoStreamEventArgs> SelectVideoStreamViewControl;
 
         private void button1_Click(object sender, EventArgs e)
         {

@@ -16,6 +16,12 @@ namespace VideoEditor
         public MainForm()
         {
             InitializeComponent();
+            videoStreamViewCollectionControl1.ChangeImageRoadsControl += Test;
+        }
+
+        private void Test(object sender, FrameEventArgs e)
+        {
+            pictureBox1.Image = e.Frame;
         }
 
         private void uiBrowseButton_Click(object sender, EventArgs e)

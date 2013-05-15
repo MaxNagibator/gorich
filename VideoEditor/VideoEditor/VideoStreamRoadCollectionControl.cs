@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using AviFile;
 
 namespace VideoEditor
 {
     public partial class VideoStreamRoadCollectionControl : UserControl
     {
         public VideoStreamRoadControl ActiveVideoStreamRoadControl { get; set; }
+        public event EventHandler<FrameEventArgs> ChangeImageRoadsControl;
+
         public VideoStreamRoadCollectionControl()
         {
             InitializeComponent();
@@ -46,9 +42,16 @@ namespace VideoEditor
             ActiveVideoStreamRoadControl.SetActive();
         }
 
-        private void ChangeImageRoadPartControl(object sender, FrameEventArgs e)
+        public void ChangeImageRoadPartControl(object sender, FrameEventArgs e)
         {
             pictureBox1.Image = e.Frame;
+            FireChangeImageRoadPartControl(e);
+        }
+
+        public void FireChangeImageRoadPartControl(FrameEventArgs e)
+        {
+            EventHandler<FrameEventArgs> handler = ChangeImageRoadsControl;
+            handler(this, e);
         }
 
         public void DeleteVideoStreamView()
@@ -57,7 +60,6 @@ namespace VideoEditor
             var deletedLocationY = ActiveVideoStreamRoadControl.Location.Y;
             var deletedHeight = ActiveVideoStreamRoadControl.Height;
             uiMainPanel.Controls.Remove(ActiveVideoStreamRoadControl);
-
             foreach (var c in uiMainPanel.Controls.OfType<VideoStreamRoadControl>().Where(control => control.Location.Y > deletedLocationY))
             {
                 c.Location = new Point(c.Location.X,c.Location.Y-deletedHeight);
@@ -80,11 +82,6 @@ namespace VideoEditor
         {
             var maxWidth = uiMainPanel.Controls.OfType<VideoStreamRoadControl>().Max(control => (control).Width);
             uiMainPanel.Width = maxWidth;
-        }
-
-        private void uiTimePanel_Click(object sender, EventArgs e)
-        {
-            
         }
     }
 }

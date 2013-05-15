@@ -40,9 +40,8 @@
             this.uiTimePanel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.uiTimePanel.Location = new System.Drawing.Point(0, 78);
             this.uiTimePanel.Name = "uiTimePanel";
-            this.uiTimePanel.Size = new System.Drawing.Size(1183, 24);
+            this.uiTimePanel.Size = new System.Drawing.Size(1166, 24);
             this.uiTimePanel.TabIndex = 4;
-            this.uiTimePanel.Click += new System.EventHandler(this.uiTimePanel_Click);
             // 
             // uiMainPanel
             // 
@@ -69,7 +68,7 @@
             this.Controls.Add(this.uiMainPanel);
             this.Controls.Add(this.uiTimePanel);
             this.Name = "VideoStreamRoadCollectionControl";
-            this.Size = new System.Drawing.Size(1183, 100);
+            this.Size = new System.Drawing.Size(1166, 100);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
@@ -77,8 +76,8 @@
 
         #endregion
 
-        private System.Windows.Forms.Panel uiTimePanel;
         private System.Windows.Forms.Panel uiMainPanel;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Panel uiTimePanel;
     }
 }
