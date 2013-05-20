@@ -89,11 +89,8 @@ namespace VideoEditor
 
         private void uiMainPanel_DragDrop(object sender, DragEventArgs e)
         {
-            _selectedVideoStreamRoadPartControl.Location = new Point(_selectedVideoStreamRoadPartControl.Location.X,
-                                                                     _selectedVideoStreamRoadPartControl.Location.Y);
             IsMoving = false;
         }
-
 
         private void videoStreamRoadPartControl_MouseDown(object sender, MouseEventArgs e)
         {
@@ -104,6 +101,8 @@ namespace VideoEditor
             {
                 IsMoving = true;
                 _firstStepMoving = true;
+                button1.Text = Cursor.Position.X.ToString();
+                button1.Text += " "+e.X.ToString();
                 _selectedVideoStreamRoadPartControl.SelectClear();
                 _selectedVideoStreamRoadPartControl.DoDragDrop(_selectedVideoStreamRoadPartControl, DragDropEffects.All);
             }
@@ -111,6 +110,8 @@ namespace VideoEditor
 
         private void uiMainPanel_DragOver(object sender, DragEventArgs e)
         {
+            //_selectedVideoStreamRoadPartControl.Location.X
+            button2.Text = e.X.ToString();
             if (IsMoving == false) return;
             int move;
             if (_firstStepMoving)

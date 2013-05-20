@@ -30,6 +30,7 @@
         {
             this.uiMainPanel = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.uiMainPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -37,6 +38,7 @@
             // 
             this.uiMainPanel.AllowDrop = true;
             this.uiMainPanel.BackColor = System.Drawing.Color.Cornsilk;
+            this.uiMainPanel.Controls.Add(this.button2);
             this.uiMainPanel.Controls.Add(this.button1);
             this.uiMainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.uiMainPanel.Location = new System.Drawing.Point(0, 0);
@@ -57,6 +59,15 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(264, 49);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(246, 23);
+            this.button2.TabIndex = 1;
+            this.button2.Text = "button2";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
             // VideoStreamRoadControl
             // 
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
@@ -72,5 +83,6 @@
 
         private System.Windows.Forms.Panel uiMainPanel;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
     }
 }

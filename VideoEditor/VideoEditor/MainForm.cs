@@ -16,7 +16,7 @@ namespace VideoEditor
         public MainForm()
         {
             InitializeComponent();
-            videoStreamViewCollectionControl1.ChangeImageRoadsControl += Test;
+            uiVideoStreamViewCollectionControl.ChangeImageRoadsControl += Test;
         }
 
         private void Test(object sender, FrameEventArgs e)
@@ -55,7 +55,9 @@ namespace VideoEditor
 
         private String GetCurrentFileName()
         {
-            return uiAviFileNameTextBox.Text.Substring(uiAviFileNameTextBox.Text.LastIndexOf("\\") + 1, uiAviFileNameTextBox.Text.Length - uiAviFileNameTextBox.Text.LastIndexOf("\\")-1);
+            return uiAviFileNameTextBox.Text.Substring(uiAviFileNameTextBox.Text.LastIndexOf("\\") + 1,
+                                                       uiAviFileNameTextBox.Text.Length -
+                                                       uiAviFileNameTextBox.Text.LastIndexOf("\\") - 1);
         }
 
         private void AddFile()
@@ -73,9 +75,11 @@ namespace VideoEditor
                     videoStreamControl.SetFrame(GetResizedBitmap(bmp, 50, 50));
                     videoStreamControl.VideoStream = aviStream;
                     videoStreamControl.SelectVideoStream += SelectVideoStreamControl;
-                    uiVideoListPanel.Controls.Add(videoStreamControl);
+                    uiVideoStreamBrowseControl.Controls.Add(videoStreamControl);
                     _selectedVideoStreamBrowseControl = videoStreamControl;
-                    foreach (VideoStreamBrowseControl browseControl in uiVideoListPanel.Controls.OfType<VideoStreamBrowseControl>())
+                    foreach (
+                        VideoStreamBrowseControl browseControl in
+                            uiVideoStreamBrowseControl.Controls.OfType<VideoStreamBrowseControl>())
                     {
                         (browseControl).uiMainPanel.BackColor = Color.Lavender;
                     }
@@ -90,9 +94,12 @@ namespace VideoEditor
         }
 
         private VideoStreamBrowseControl _selectedVideoStreamBrowseControl;
+
         private void SelectVideoStreamControl(object sender, VideoStreamEventArgs e)
         {
-            foreach (VideoStreamBrowseControl browseControl in uiVideoListPanel.Controls.OfType<VideoStreamBrowseControl>())
+            foreach (
+                VideoStreamBrowseControl browseControl in
+                    uiVideoStreamBrowseControl.Controls.OfType<VideoStreamBrowseControl>())
             {
                 (browseControl).uiMainPanel.BackColor = Color.Lavender;
             }
@@ -119,23 +126,70 @@ namespace VideoEditor
         {
             if (_selectedVideoStreamBrowseControl != null)
             {
-                videoStreamViewCollectionControl1.AddVideoStreamView(new VideoStreamRoadControl(_selectedVideoStreamBrowseControl.VideoStream));
+                uiVideoStreamViewCollectionControl.AddVideoStreamView(
+                    new VideoStreamRoadControl(_selectedVideoStreamBrowseControl.VideoStream));
             }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            videoStreamViewCollectionControl1.DeleteVideoStreamView();
+            uiVideoStreamViewCollectionControl.DeleteVideoStreamView();
         }
 
         private void uiIncreaseRoadCollectionWidthButton_Click(object sender, EventArgs e)
         {
-            videoStreamViewCollectionControl1.IncreaseRoadCollectionWidth();
+            uiVideoStreamViewCollectionControl.IncreaseRoadCollectionWidth();
         }
 
         private void uiDecreaseRoadCollectionWidthButton_Click(object sender, EventArgs e)
         {
-            videoStreamViewCollectionControl1.DecreaseRoadCollection();
+            uiVideoStreamViewCollectionControl.DecreaseRoadCollection();
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            CloseAllStreams();
+        }
+
+        private void CloseAllStreams()
+        {
+            CloseAllStreamsInVideoStreamBrowseControl();
+            CloseAllStreamsInVideoStreamViewCollectionControl();
+        }
+
+        private void CloseAllStreamsInVideoStreamViewCollectionControl()
+        {
+            foreach (var collectionControl in
+                uiVideoStreamViewCollectionControl.Controls.OfType<VideoStreamRoadCollectionControl>())
+            {
+                CloseAllStreamsInVideoStreamRoadControl(collectionControl);
+            }
+        }
+
+        private void CloseAllStreamsInVideoStreamRoadControl(VideoStreamRoadCollectionControl collectionControl)
+        {
+            foreach (var roadControl in collectionControl.Controls.OfType<VideoStreamRoadControl>())
+            {
+                (roadControl).VideoStream.GetFrameClose();
+                CloseAllStreamsInVideoStreamRoadPartControl(roadControl);
+            }
+        }
+
+        private void CloseAllStreamsInVideoStreamBrowseControl()
+        {
+            foreach (var browseControl in uiVideoStreamBrowseControl.Controls.OfType<VideoStreamBrowseControl>())
+            {
+                var videoStream = (browseControl).VideoStream;
+                if (videoStream != null) videoStream.GetFrameClose();
+            }
+        }
+
+        private void CloseAllStreamsInVideoStreamRoadPartControl(VideoStreamRoadControl road)
+        {
+            foreach (var partControl in (road).Controls.OfType<VideoStreamRoadPartControl>())
+            {
+                (partControl).VideoStream.GetFrameClose();
+            }
         }
     }
 }
