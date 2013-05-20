@@ -9,8 +9,8 @@ namespace VideoEditor
     public partial class VideoStreamRoadControl : UserControl
     {
         private VideoStreamRoadPartControl _selectedVideoStreamRoadPartControl;
-        private int _prevMouseLocationX;
-        private bool _firstStepMoving = true;
+        private int _beforeMoveMouseLocationX;
+        private int _beforeMoveSelectedVideoStreamRoadPartControlLocationX;
 
         public Guid Guid { get; set; }
         public VideoStream VideoStream { get; set; }
@@ -100,9 +100,8 @@ namespace VideoEditor
             if (_selectedVideoStreamRoadPartControl.MoveEnable)
             {
                 IsMoving = true;
-                _firstStepMoving = true;
-                button1.Text = Cursor.Position.X.ToString();
-                button1.Text += " "+e.X.ToString();
+                _beforeMoveMouseLocationX = Cursor.Position.X;
+                _beforeMoveSelectedVideoStreamRoadPartControlLocationX = _selectedVideoStreamRoadPartControl.Location.X;
                 _selectedVideoStreamRoadPartControl.SelectClear();
                 _selectedVideoStreamRoadPartControl.DoDragDrop(_selectedVideoStreamRoadPartControl, DragDropEffects.All);
             }
@@ -110,22 +109,11 @@ namespace VideoEditor
 
         private void uiMainPanel_DragOver(object sender, DragEventArgs e)
         {
-            //_selectedVideoStreamRoadPartControl.Location.X
             button2.Text = e.X.ToString();
             if (IsMoving == false) return;
-            int move;
-            if (_firstStepMoving)
-            {
-                move = 0;
-                _firstStepMoving = false;
-            }
-            else
-            {
-                move =  e.X - _prevMouseLocationX;
-            }
-            _selectedVideoStreamRoadPartControl.Location = new Point(_selectedVideoStreamRoadPartControl.Location.X+move,
+            int move = Cursor.Position.X - _beforeMoveMouseLocationX;
+            _selectedVideoStreamRoadPartControl.Location = new Point(_beforeMoveSelectedVideoStreamRoadPartControlLocationX + move,
                                                                      _selectedVideoStreamRoadPartControl.Location.Y);
-            _prevMouseLocationX = e.X;
             e.Effect = DragDropEffects.Move;
             UpdateControlInfo();
             CheckRoadSize();
@@ -144,7 +132,7 @@ namespace VideoEditor
         {
             int max = uiMainPanel.Controls.OfType<VideoStreamRoadPartControl>()
                 .Select(control => (control).RightCoordinate).Concat(new[] {0}).Max();
-            Width = max;
+            Width = max+100;
         }
 
         public void SetActive()
