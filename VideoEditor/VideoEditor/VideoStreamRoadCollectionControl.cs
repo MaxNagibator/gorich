@@ -9,6 +9,7 @@ namespace VideoEditor
     {
         public VideoStreamRoadControl ActiveVideoStreamRoadControl { get; set; }
         public event EventHandler<FrameEventArgs> ChangeImageRoadsControl;
+        private int _maxRoadLength;
 
         public VideoStreamRoadCollectionControl()
         {
@@ -17,19 +18,23 @@ namespace VideoEditor
 
         public void AddVideoStreamView(VideoStreamRoadControl videoStreamRoadControl)
         {
+
             videoStreamRoadControl.Width = videoStreamRoadControl.VideoStream.CountFrames;
             videoStreamRoadControl.Location = new Point(0,GetSumHeightAllVideoStreamViewControl());
+            videoStreamRoadControl.button1.Text = videoStreamRoadControl.Location.Y.ToString();
             videoStreamRoadControl.SelectVideoStreamViewControl += SelectVideoStreamViewControl;
             videoStreamRoadControl.AddVideoStreamRoadPart(new VideoStreamRoadPartControl(videoStreamRoadControl.VideoStream));
             videoStreamRoadControl.ChangeImageRoadPartControl += ChangeImageRoadPartControl;
             uiMainPanel.Controls.Add(videoStreamRoadControl);
             uiMainPanel.Height = GetSumHeightAllVideoStreamViewControl();
+            videoStreamRoadControl.button1.Text += " " + videoStreamRoadControl.Height.ToString();
             SetMainPanelMinWidth();
+            panel1.SendToBack();
         }
 
         private int GetSumHeightAllVideoStreamViewControl()
         {
-            return uiMainPanel.Controls.OfType<VideoStreamRoadControl>().Sum(control => (control).Height);
+            return uiMainPanel.Controls.OfType<VideoStreamRoadControl>().Sum(control => (control).Height+4);
         }
 
         private void SelectVideoStreamViewControl(object sender, EventArgs e)
@@ -82,6 +87,34 @@ namespace VideoEditor
         {
             var maxWidth = uiMainPanel.Controls.OfType<VideoStreamRoadControl>().Max(control => (control).Width);
             uiMainPanel.Width = maxWidth;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Play();
+        }
+
+        private void Play()
+        {
+            if (!uiMainPanel.Controls.OfType<VideoStreamRoadControl>().Any()) return;
+            _maxRoadLength = uiMainPanel.Controls.OfType<VideoStreamRoadControl>().Max(control => (control).Width);
+            uiPlayTimer.Interval = 1000/24;
+            uiPlayTimer.Start();
+        }
+
+        private void uiPlayTimer_Tick(object sender, EventArgs e)
+        {
+            panel1.Location = new Point(cursorPlayPanel.Location.X + 1, cursorPlayPanel.Location.Y);
+            cursorPlayPanel.Location = new Point(cursorPlayPanel.Location.X + 1, cursorPlayPanel.Location.Y);
+            checkStop();
+        }
+
+        private void checkStop()
+        {
+            if (cursorPlayPanel.Location.X > _maxRoadLength)
+            {
+                uiPlayTimer.Stop();
+            }
         }
     }
 }
