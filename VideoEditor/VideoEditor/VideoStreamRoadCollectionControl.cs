@@ -18,7 +18,6 @@ namespace VideoEditor
 
         public void AddVideoStreamView(VideoStreamRoadControl videoStreamRoadControl)
         {
-
             videoStreamRoadControl.Width = videoStreamRoadControl.VideoStream.CountFrames;
             videoStreamRoadControl.Location = new Point(0,GetSumHeightAllVideoStreamViewControl());
             videoStreamRoadControl.button1.Text = videoStreamRoadControl.Location.Y.ToString();
@@ -27,9 +26,8 @@ namespace VideoEditor
             videoStreamRoadControl.ChangeImageRoadPartControl += ChangeImageRoadPartControl;
             uiMainPanel.Controls.Add(videoStreamRoadControl);
             uiMainPanel.Height = GetSumHeightAllVideoStreamViewControl();
-            videoStreamRoadControl.button1.Text += " " + videoStreamRoadControl.Height.ToString();
             SetMainPanelMinWidth();
-            panel1.SendToBack();
+            cursorPlayUpPanel.SendToBack();
         }
 
         private int GetSumHeightAllVideoStreamViewControl()
@@ -104,14 +102,14 @@ namespace VideoEditor
 
         private void uiPlayTimer_Tick(object sender, EventArgs e)
         {
-            panel1.Location = new Point(cursorPlayPanel.Location.X + 1, cursorPlayPanel.Location.Y);
-            cursorPlayPanel.Location = new Point(cursorPlayPanel.Location.X + 1, cursorPlayPanel.Location.Y);
+            cursorPlayUpPanel.Location = new Point(cursorPlayDownPanel.Location.X + 1, cursorPlayDownPanel.Location.Y);
+            cursorPlayDownPanel.Location = new Point(cursorPlayDownPanel.Location.X + 1, cursorPlayDownPanel.Location.Y);
             checkStop();
         }
 
         private void checkStop()
         {
-            if (cursorPlayPanel.Location.X > _maxRoadLength)
+            if (cursorPlayDownPanel.Location.X > _maxRoadLength)
             {
                 uiPlayTimer.Stop();
             }

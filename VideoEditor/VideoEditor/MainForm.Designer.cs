@@ -100,13 +100,14 @@
             this.splitContainer1.Panel2.Controls.Add(this.uiDeleteVideoStreamButton);
             this.splitContainer1.Panel2.Controls.Add(this.uiAddVideoStreamButton);
             this.splitContainer1.Panel2.Controls.Add(this.uiVideoStreamViewCollectionControl);
-            this.splitContainer1.Size = new System.Drawing.Size(1286, 602);
+            this.splitContainer1.Size = new System.Drawing.Size(1276, 602);
             this.splitContainer1.SplitterDistance = 312;
             this.splitContainer1.TabIndex = 5;
             // 
             // uiDecreaseRoadCollectionWidthButton
             // 
-            this.uiDecreaseRoadCollectionWidthButton.Location = new System.Drawing.Point(1210, 259);
+            this.uiDecreaseRoadCollectionWidthButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.uiDecreaseRoadCollectionWidthButton.Location = new System.Drawing.Point(1200, 259);
             this.uiDecreaseRoadCollectionWidthButton.Name = "uiDecreaseRoadCollectionWidthButton";
             this.uiDecreaseRoadCollectionWidthButton.Size = new System.Drawing.Size(29, 24);
             this.uiDecreaseRoadCollectionWidthButton.TabIndex = 9;
@@ -116,7 +117,8 @@
             // 
             // uiIncreaseRoadCollectionWidthButton
             // 
-            this.uiIncreaseRoadCollectionWidthButton.Location = new System.Drawing.Point(1245, 259);
+            this.uiIncreaseRoadCollectionWidthButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.uiIncreaseRoadCollectionWidthButton.Location = new System.Drawing.Point(1235, 259);
             this.uiIncreaseRoadCollectionWidthButton.Name = "uiIncreaseRoadCollectionWidthButton";
             this.uiIncreaseRoadCollectionWidthButton.Size = new System.Drawing.Size(29, 24);
             this.uiIncreaseRoadCollectionWidthButton.TabIndex = 8;
@@ -154,14 +156,14 @@
             this.uiVideoStreamViewCollectionControl.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.uiVideoStreamViewCollectionControl.Location = new System.Drawing.Point(84, 3);
             this.uiVideoStreamViewCollectionControl.Name = "uiVideoStreamViewCollectionControl";
-            this.uiVideoStreamViewCollectionControl.Size = new System.Drawing.Size(1199, 253);
+            this.uiVideoStreamViewCollectionControl.Size = new System.Drawing.Size(1189, 253);
             this.uiVideoStreamViewCollectionControl.TabIndex = 4;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1286, 602);
+            this.ClientSize = new System.Drawing.Size(1276, 602);
             this.Controls.Add(this.splitContainer1);
             this.Name = "MainForm";
             this.Text = "VideoEditor";

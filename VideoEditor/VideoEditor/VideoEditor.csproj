@@ -57,6 +57,18 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TimeLineControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TimeLineControl.Designer.cs">
+      <DependentUpon>TimeLineControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TimeLinePartControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TimeLinePartControl.Designer.cs">
+      <DependentUpon>TimeLinePartControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="VideoStreamBrowseControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -93,6 +105,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="TimeLineControl.resx">
+      <DependentUpon>TimeLineControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TimeLinePartControl.resx">
+      <DependentUpon>TimeLinePartControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="VideoStreamBrowseControl.resx">
       <DependentUpon>VideoStreamBrowseControl.cs</DependentUpon>
     </EmbeddedResource>
