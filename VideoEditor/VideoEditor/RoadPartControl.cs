@@ -5,7 +5,7 @@ using AviFile;
 
 namespace VideoEditor
 {
-    public partial class VideoStreamRoadPartControl : UserControl
+    public partial class RoadPartControl : UserControl
     {
         private readonly Color _infoPanelColor = Color.DarkGreen;
         private readonly Color _selectedColor = Color.Orange;
@@ -30,7 +30,7 @@ namespace VideoEditor
             set { uiLeftCoordinateLabel.Text = value.ToString(); }
         }
 
-        public VideoStreamRoadPartControl()
+        public RoadPartControl()
         {
             InitializeComponent();
             MoveEnable = true;
@@ -38,7 +38,7 @@ namespace VideoEditor
             RightCoordinate = Width;
         }
 
-        public VideoStreamRoadPartControl(VideoStream videoStream)
+        public RoadPartControl(VideoStream videoStream)
         {
             InitializeComponent();
             uiLeftCoordinateLabel.BackColor = _infoPanelColor;
@@ -113,7 +113,7 @@ namespace VideoEditor
 
         private void VideoStreamRoadPartControl_Paint(object sender, PaintEventArgs e)
         {
-            var p = sender as VideoStreamRoadPartControl;
+            var p = sender as RoadPartControl;
             var g = e.Graphics;
             if (p == null) return;
             var points = new Point[4];

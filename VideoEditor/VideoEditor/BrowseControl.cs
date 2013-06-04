@@ -5,13 +5,13 @@ using AviFile;
 
 namespace VideoEditor
 {
-    public partial class VideoStreamBrowseControl : UserControl
+    public partial class BrowseControl : UserControl
     {
         public Guid Guid { get; set; }
         public bool IsSelected { get; set; }
         public VideoStream VideoStream { get; set; }
 
-        public VideoStreamBrowseControl()
+        public BrowseControl()
         {
             InitializeComponent();
         }

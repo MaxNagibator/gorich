@@ -1,6 +1,6 @@
 ﻿namespace VideoEditor
 {
-    partial class VideoStreamRoadControl
+    partial class RoadControl
     {
         /// <summary>
         /// Требуется переменная конструктора.

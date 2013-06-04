@@ -1,12 +1,7 @@
 ﻿using AviFile;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace VideoEditor
@@ -50,14 +45,14 @@ namespace VideoEditor
 
         private String GetCurrentFilePath()
         {
-            return uiAviFileNameTextBox.Text.Substring(0, uiAviFileNameTextBox.Text.LastIndexOf("\\") + 1);
+            return uiAviFileNameTextBox.Text.Substring(0, uiAviFileNameTextBox.Text.LastIndexOf("\\", StringComparison.Ordinal) + 1);
         }
 
         private String GetCurrentFileName()
         {
-            return uiAviFileNameTextBox.Text.Substring(uiAviFileNameTextBox.Text.LastIndexOf("\\") + 1,
+            return uiAviFileNameTextBox.Text.Substring(uiAviFileNameTextBox.Text.LastIndexOf("\\", StringComparison.Ordinal) + 1,
                                                        uiAviFileNameTextBox.Text.Length -
-                                                       uiAviFileNameTextBox.Text.LastIndexOf("\\") - 1);
+                                                       uiAviFileNameTextBox.Text.LastIndexOf("\\", StringComparison.Ordinal) - 1);
         }
 
         private void AddFile()
@@ -70,7 +65,7 @@ namespace VideoEditor
                     var videoStream = aviManager.GetVideoStream();
                     videoStream.GetFrameOpen();
                     Bitmap bmp = videoStream.GetBitmap(videoStream.CountFrames / 2);
-                    var videoStreamControl = new VideoStreamBrowseControl {Dock = DockStyle.Top};
+                    var videoStreamControl = new BrowseControl {Dock = DockStyle.Top};
                     videoStreamControl.SetFileName(GetCurrentFileName());
                     videoStreamControl.SetFrame(GetResizedBitmap(bmp, 50, 50));
                     videoStreamControl.VideoStream = videoStream;
@@ -78,8 +73,8 @@ namespace VideoEditor
                     uiVideoStreamBrowseControl.Controls.Add(videoStreamControl);
                     _selectedVideoStreamBrowseControl = videoStreamControl;
                     foreach (
-                        VideoStreamBrowseControl browseControl in
-                            uiVideoStreamBrowseControl.Controls.OfType<VideoStreamBrowseControl>())
+                        BrowseControl browseControl in
+                            uiVideoStreamBrowseControl.Controls.OfType<BrowseControl>())
                     {
                         (browseControl).uiMainPanel.BackColor = Color.Lavender;
                     }
@@ -93,18 +88,18 @@ namespace VideoEditor
             }
         }
 
-        private VideoStreamBrowseControl _selectedVideoStreamBrowseControl;
+        private BrowseControl _selectedVideoStreamBrowseControl;
 
         private void SelectVideoStreamControl(object sender, VideoStreamEventArgs e)
         {
             foreach (
-                VideoStreamBrowseControl browseControl in
-                    uiVideoStreamBrowseControl.Controls.OfType<VideoStreamBrowseControl>())
+                BrowseControl browseControl in
+                    uiVideoStreamBrowseControl.Controls.OfType<BrowseControl>())
             {
                 (browseControl).uiMainPanel.BackColor = Color.Lavender;
             }
-            _selectedVideoStreamBrowseControl = ((VideoStreamBrowseControl) sender);
-            ((VideoStreamBrowseControl) sender).uiMainPanel.BackColor = Color.Aquamarine;
+            _selectedVideoStreamBrowseControl = ((BrowseControl) sender);
+            ((BrowseControl) sender).uiMainPanel.BackColor = Color.Aquamarine;
             var videoStream = e.EditableVideoStream;
             pictureBox1.Image = videoStream.GetBitmap(videoStream.CountFrames/2);
         }
@@ -127,7 +122,7 @@ namespace VideoEditor
             if (_selectedVideoStreamBrowseControl != null)
             {
                 uiVideoStreamViewCollectionControl.AddVideoStreamView(
-                    new VideoStreamRoadControl(_selectedVideoStreamBrowseControl.VideoStream));
+                    new RoadControl(_selectedVideoStreamBrowseControl.VideoStream));
             }
         }
 
@@ -153,42 +148,16 @@ namespace VideoEditor
 
         private void CloseAllStreams()
         {
-            CloseAllStreamsInVideoStreamBrowseControl();
-            CloseAllStreamsInVideoStreamViewCollectionControl();
-        }
-
-        private void CloseAllStreamsInVideoStreamViewCollectionControl()
-        {
-            foreach (var collectionControl in
-                uiVideoStreamViewCollectionControl.Controls.OfType<VideoStreamRoadCollectionControl>())
+            const string targetName = "VideoEditor";
+            var localProcs = System.Diagnostics.Process.GetProcesses();
+            try
             {
-                CloseAllStreamsInVideoStreamRoadControl(collectionControl);
+                System.Diagnostics.Process targetProc = localProcs.First(p => p.ProcessName == targetName);
+                targetProc.Kill();
             }
-        }
-
-        private void CloseAllStreamsInVideoStreamRoadControl(VideoStreamRoadCollectionControl collectionControl)
-        {
-            foreach (var roadControl in collectionControl.Controls.OfType<VideoStreamRoadControl>())
+            catch
             {
-                (roadControl).VideoStream.GetFrameClose();
-                CloseAllStreamsInVideoStreamRoadPartControl(roadControl);
-            }
-        }
-
-        private void CloseAllStreamsInVideoStreamBrowseControl()
-        {
-            foreach (var browseControl in uiVideoStreamBrowseControl.Controls.OfType<VideoStreamBrowseControl>())
-            {
-                var videoStream = (browseControl).VideoStream;
-                if (videoStream != null) videoStream.GetFrameClose();
-            }
-        }
-
-        private void CloseAllStreamsInVideoStreamRoadPartControl(VideoStreamRoadControl road)
-        {
-            foreach (var partControl in (road).Controls.OfType<VideoStreamRoadPartControl>())
-            {
-                (partControl).VideoStream.GetFrameClose();
+                
             }
         }
     }

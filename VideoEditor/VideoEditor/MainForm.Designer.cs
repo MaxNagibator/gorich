@@ -37,7 +37,7 @@
             this.uiIncreaseRoadCollectionWidthButton = new System.Windows.Forms.Button();
             this.uiDeleteVideoStreamButton = new System.Windows.Forms.Button();
             this.uiAddVideoStreamButton = new System.Windows.Forms.Button();
-            this.uiVideoStreamViewCollectionControl = new VideoEditor.VideoStreamRoadCollectionControl();
+            this.uiVideoStreamViewCollectionControl = new VideoEditor.RoadCollectionControl();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -185,7 +185,7 @@
         private System.Windows.Forms.TextBox uiAviFileNameTextBox;
         private System.Windows.Forms.Panel uiVideoStreamBrowseControl;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private VideoStreamRoadCollectionControl uiVideoStreamViewCollectionControl;
+        private RoadCollectionControl uiVideoStreamViewCollectionControl;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Button uiAddVideoStreamButton;
         private System.Windows.Forms.Button uiDeleteVideoStreamButton;

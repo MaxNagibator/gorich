@@ -69,29 +69,29 @@
     <Compile Include="TimeLinePartControl.Designer.cs">
       <DependentUpon>TimeLinePartControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="VideoStreamBrowseControl.cs">
+    <Compile Include="BrowseControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="VideoStreamBrowseControl.Designer.cs">
-      <DependentUpon>VideoStreamBrowseControl.cs</DependentUpon>
+    <Compile Include="BrowseControl.Designer.cs">
+      <DependentUpon>BrowseControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="VideoStreamRoadPartControl.cs">
+    <Compile Include="RoadPartControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="VideoStreamRoadPartControl.Designer.cs">
-      <DependentUpon>VideoStreamRoadPartControl.cs</DependentUpon>
+    <Compile Include="RoadPartControl.Designer.cs">
+      <DependentUpon>RoadPartControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="VideoStreamRoadControl.cs">
+    <Compile Include="RoadControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="VideoStreamRoadControl.Designer.cs">
-      <DependentUpon>VideoStreamRoadControl.cs</DependentUpon>
+    <Compile Include="RoadControl.Designer.cs">
+      <DependentUpon>RoadControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="VideoStreamRoadCollectionControl.cs">
+    <Compile Include="RoadCollectionControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="VideoStreamRoadCollectionControl.Designer.cs">
-      <DependentUpon>VideoStreamRoadCollectionControl.cs</DependentUpon>
+    <Compile Include="RoadCollectionControl.Designer.cs">
+      <DependentUpon>RoadCollectionControl.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -111,17 +111,17 @@
     <EmbeddedResource Include="TimeLinePartControl.resx">
       <DependentUpon>TimeLinePartControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="VideoStreamBrowseControl.resx">
-      <DependentUpon>VideoStreamBrowseControl.cs</DependentUpon>
+    <EmbeddedResource Include="BrowseControl.resx">
+      <DependentUpon>BrowseControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="VideoStreamRoadControl.resx">
-      <DependentUpon>VideoStreamRoadControl.cs</DependentUpon>
+    <EmbeddedResource Include="RoadControl.resx">
+      <DependentUpon>RoadControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="VideoStreamRoadCollectionControl.resx">
-      <DependentUpon>VideoStreamRoadCollectionControl.cs</DependentUpon>
+    <EmbeddedResource Include="RoadCollectionControl.resx">
+      <DependentUpon>RoadCollectionControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="VideoStreamRoadPartControl.resx">
-      <DependentUpon>VideoStreamRoadPartControl.cs</DependentUpon>
+    <EmbeddedResource Include="RoadPartControl.resx">
+      <DependentUpon>RoadPartControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

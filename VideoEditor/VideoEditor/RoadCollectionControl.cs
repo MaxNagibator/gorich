@@ -5,24 +5,24 @@ using System.Windows.Forms;
 
 namespace VideoEditor
 {
-    public partial class VideoStreamRoadCollectionControl : UserControl
+    public partial class RoadCollectionControl : UserControl
     {
-        public VideoStreamRoadControl ActiveVideoStreamRoadControl { get; set; }
+        public RoadControl ActiveVideoStreamRoadControl { get; set; }
         public event EventHandler<FrameEventArgs> ChangeImageRoadsControl;
         private int _maxRoadLength;
 
-        public VideoStreamRoadCollectionControl()
+        public RoadCollectionControl()
         {
             InitializeComponent();
         }
 
-        public void AddVideoStreamView(VideoStreamRoadControl videoStreamRoadControl)
+        public void AddVideoStreamView(RoadControl videoStreamRoadControl)
         {
             videoStreamRoadControl.Width = videoStreamRoadControl.VideoStream.CountFrames;
             videoStreamRoadControl.Location = new Point(0,GetSumHeightAllVideoStreamViewControl());
             videoStreamRoadControl.button1.Text = videoStreamRoadControl.Location.Y.ToString();
             videoStreamRoadControl.SelectVideoStreamViewControl += SelectVideoStreamViewControl;
-            videoStreamRoadControl.AddVideoStreamRoadPart(new VideoStreamRoadPartControl(videoStreamRoadControl.VideoStream));
+            videoStreamRoadControl.AddVideoStreamRoadPart(new RoadPartControl(videoStreamRoadControl.VideoStream));
             videoStreamRoadControl.ChangeImageRoadPartControl += ChangeImageRoadPartControl;
             uiMainPanel.Controls.Add(videoStreamRoadControl);
             uiMainPanel.Height = GetSumHeightAllVideoStreamViewControl();
@@ -32,13 +32,13 @@ namespace VideoEditor
 
         private int GetSumHeightAllVideoStreamViewControl()
         {
-            return uiMainPanel.Controls.OfType<VideoStreamRoadControl>().Sum(control => (control).Height+4);
+            return uiMainPanel.Controls.OfType<RoadControl>().Sum(control => (control).Height+4);
         }
 
         private void SelectVideoStreamViewControl(object sender, EventArgs e)
         {
-            ActiveVideoStreamRoadControl = (VideoStreamRoadControl)sender;
-            foreach (var control in uiMainPanel.Controls.OfType<VideoStreamRoadControl>())
+            ActiveVideoStreamRoadControl = (RoadControl)sender;
+            foreach (var control in uiMainPanel.Controls.OfType<RoadControl>())
             {
                 (control).SetInactive();
             }
@@ -62,7 +62,7 @@ namespace VideoEditor
             var deletedLocationY = ActiveVideoStreamRoadControl.Location.Y;
             var deletedHeight = ActiveVideoStreamRoadControl.Height;
             uiMainPanel.Controls.Remove(ActiveVideoStreamRoadControl);
-            foreach (var c in uiMainPanel.Controls.OfType<VideoStreamRoadControl>().Where(control => control.Location.Y > deletedLocationY))
+            foreach (var c in uiMainPanel.Controls.OfType<RoadControl>().Where(control => control.Location.Y > deletedLocationY))
             {
                 c.Location = new Point(c.Location.X,c.Location.Y-deletedHeight);
             }
@@ -82,7 +82,7 @@ namespace VideoEditor
 
         private void SetMainPanelMinWidth()
         {
-            var maxWidth = uiMainPanel.Controls.OfType<VideoStreamRoadControl>().Max(control => (control).Width);
+            var maxWidth = uiMainPanel.Controls.OfType<RoadControl>().Max(control => (control).Width);
             uiMainPanel.Width = maxWidth;
         }
 
@@ -93,8 +93,8 @@ namespace VideoEditor
 
         private void Play()
         {
-            if (!uiMainPanel.Controls.OfType<VideoStreamRoadControl>().Any()) return;
-            _maxRoadLength = uiMainPanel.Controls.OfType<VideoStreamRoadControl>().Max(control => (control).Width);
+            if (!uiMainPanel.Controls.OfType<RoadControl>().Any()) return;
+            _maxRoadLength = uiMainPanel.Controls.OfType<RoadControl>().Max(control => (control).Width);
             uiPlayTimer.Interval = 1000/24;
             uiPlayTimer.Start();
         }

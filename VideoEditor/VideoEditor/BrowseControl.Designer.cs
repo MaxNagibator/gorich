@@ -1,6 +1,6 @@
 ﻿namespace VideoEditor
 {
-    partial class VideoStreamBrowseControl
+    partial class BrowseControl
     {
         /// <summary>
         /// Требуется переменная конструктора.
