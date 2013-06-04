@@ -10,11 +10,12 @@ namespace VideoEditor
         private readonly Color _infoPanelColor = Color.DarkGreen;
         private readonly Color _selectedColor = Color.Orange;
         private const int MOVING_AREA_HEIGHT = 25;
-        private bool _isSelected;
-        public VideoStream VideoStream { get; set; }
+        public bool _isSelected;
+        public EditableVideoStream EditableVideoStream { get; set; }
         public int SelectedPartX1 { get; set; }
         public int SelectedPartX2 { get; set; }
         public Panel SelectedPart { get; set; }
+        public bool HasSelectPart { get; set; }
         public bool MoveEnable { get; set; }
 
         public int RightCoordinate
@@ -37,28 +38,30 @@ namespace VideoEditor
             RightCoordinate = Width;
         }
 
-        public VideoStreamRoadPartControl(VideoStream videoStream)
+        public VideoStreamRoadPartControl(EditableVideoStream editableVideoStream)
         {
             InitializeComponent();
             uiLeftCoordinateLabel.BackColor = _infoPanelColor;
             uiRightCoordinateLabel.BackColor = _infoPanelColor;
-            Width = videoStream.CountFrames;
-            VideoStream = videoStream;
+            Width = editableVideoStream.CountFrames;
+            EditableVideoStream = editableVideoStream;
             MoveEnable = true;
             LeftCoordinate = 0;
             RightCoordinate = Width;
         }
         private void VideoStreamRoadPartControl_MouseDown(object sender, MouseEventArgs e)
         {
-            if (IsMovingArea(e))
+            if (e.Button == MouseButtons.Left && IsSelectedArea(e))
             {
                 MoveEnable = false;
+                HasSelectPart = true;
                 StartSelect(e.X);
             }
         }
 
-        private bool IsMovingArea(MouseEventArgs mouseEventArgs)
+        private bool IsSelectedArea(MouseEventArgs mouseEventArgs)
         {
+            HasSelectPart = false;
             return mouseEventArgs.Y > MOVING_AREA_HEIGHT;
         }
 
@@ -75,6 +78,7 @@ namespace VideoEditor
         public void SelectClear()
         {
             Controls.Remove(SelectedPart);
+
         }
 
         private void VideoStreamRoadPartControl_MouseMove(object sender, MouseEventArgs e)
@@ -89,19 +93,22 @@ namespace VideoEditor
 
         private void VideoStreamRoadPartControl_MouseUp(object sender, MouseEventArgs e)
         {
-            if (SelectedPart.Location.X < 0)
+            if (_isSelected)
             {
-                SelectedPart.Width += SelectedPart.Location.X;
-                SelectedPart.Location = new Point(0, MOVING_AREA_HEIGHT);
+                if (SelectedPart.Location.X < 0)
+                {
+                    SelectedPart.Width += SelectedPart.Location.X;
+                    SelectedPart.Location = new Point(0, MOVING_AREA_HEIGHT);
+                }
+                if (SelectedPart.Location.X + SelectedPart.Width > Width)
+                {
+                    SelectedPart.Width = Width - SelectedPartX1;
+                }
+                SelectedPartX1 = SelectedPart.Location.X;
+                SelectedPartX2 = SelectedPart.Width + SelectedPart.Location.X;
+                _isSelected = false;
+                MoveEnable = true;
             }
-            if (SelectedPart.Location.X + SelectedPart.Width > Width)
-            {
-                SelectedPart.Width = Width - SelectedPartX1;
-            }
-            SelectedPartX1 = SelectedPart.Location.X;
-            SelectedPartX2 = SelectedPart.Width + SelectedPart.Location.X;
-            _isSelected = false;
-            MoveEnable = true;
         }
 
         private void VideoStreamRoadPartControl_Paint(object sender, PaintEventArgs e)

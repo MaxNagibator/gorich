@@ -9,7 +9,7 @@ namespace VideoEditor
     {
         public Guid Guid { get; set; }
         public bool IsSelected { get; set; }
-        public VideoStream VideoStream { get; set; }
+        public EditableVideoStream EditableVideoStream { get; set; }
 
         public VideoStreamBrowseControl()
         {
@@ -33,7 +33,7 @@ namespace VideoEditor
 
         private void uiMainPanel_Click(object sender, EventArgs e)
         {
-            var videoStreamEventArgs = new VideoStreamEventArgs {VideoStream = VideoStream};
+            var videoStreamEventArgs = new VideoStreamEventArgs {EditableVideoStream = EditableVideoStream};
             FireSelectVideoStream(videoStreamEventArgs);
         }
 

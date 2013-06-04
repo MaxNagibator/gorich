@@ -11,6 +11,6 @@ namespace VideoEditor
 
     public class VideoStreamEventArgs : EventArgs
     {
-        public VideoStream VideoStream { get; set; }
+        public VideoStream EditableVideoStream { get; set; }
     }
 }

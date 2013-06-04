@@ -34,12 +34,10 @@
             this.button1 = new System.Windows.Forms.Button();
             this.uiMainPanel = new System.Windows.Forms.Panel();
             this.cursorPlayUpPanel = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.uiPlayTimer = new System.Windows.Forms.Timer(this.components);
             this.timeLineControl1 = new VideoEditor.TimeLineControl();
             this.uiTimePanel.SuspendLayout();
             this.uiMainPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // uiTimePanel
@@ -93,14 +91,6 @@
             this.cursorPlayUpPanel.Size = new System.Drawing.Size(10, 0);
             this.cursorPlayUpPanel.TabIndex = 2;
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Location = new System.Drawing.Point(591, 94);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(100, 78);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            // 
             // uiPlayTimer
             // 
             this.uiPlayTimer.Tick += new System.EventHandler(this.uiPlayTimer_Tick);
@@ -118,7 +108,6 @@
             // 
             this.AutoScroll = true;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.uiTimePanel);
             this.Controls.Add(this.uiMainPanel);
             this.Controls.Add(this.timeLineControl1);
@@ -126,7 +115,6 @@
             this.Size = new System.Drawing.Size(1215, 217);
             this.uiTimePanel.ResumeLayout(false);
             this.uiMainPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -134,7 +122,6 @@
         #endregion
 
         private System.Windows.Forms.Panel uiMainPanel;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Panel uiTimePanel;
         private System.Windows.Forms.Panel cursorPlayDownPanel;
         private System.Windows.Forms.Button button1;

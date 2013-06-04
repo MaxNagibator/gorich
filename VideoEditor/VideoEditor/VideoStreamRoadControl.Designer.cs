@@ -28,17 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.uiMainPanel = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.uiMainContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.uiDeleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.uiSplitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.uiMainPanel.SuspendLayout();
+            this.uiMainContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // uiMainPanel
             // 
             this.uiMainPanel.AllowDrop = true;
             this.uiMainPanel.BackColor = System.Drawing.Color.Cornsilk;
-            this.uiMainPanel.Controls.Add(this.button2);
             this.uiMainPanel.Controls.Add(this.button1);
             this.uiMainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.uiMainPanel.Location = new System.Drawing.Point(0, 0);
@@ -57,16 +60,28 @@
             this.button1.TabIndex = 0;
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // button2
+            // uiMainContextMenuStrip
             // 
-            this.button2.Location = new System.Drawing.Point(264, 49);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(246, 23);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
+            this.uiMainContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.uiDeleteToolStripMenuItem,
+            this.uiSplitToolStripMenuItem});
+            this.uiMainContextMenuStrip.Name = "uiMainContextMenuStrip";
+            this.uiMainContextMenuStrip.Size = new System.Drawing.Size(153, 70);
+            // 
+            // uiDeleteToolStripMenuItem
+            // 
+            this.uiDeleteToolStripMenuItem.Name = "uiDeleteToolStripMenuItem";
+            this.uiDeleteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.uiDeleteToolStripMenuItem.Text = "Удалить";
+            this.uiDeleteToolStripMenuItem.Click += new System.EventHandler(this.uiDeleteToolStripMenuItem_Click);
+            // 
+            // uiSplitToolStripMenuItem
+            // 
+            this.uiSplitToolStripMenuItem.Name = "uiSplitToolStripMenuItem";
+            this.uiSplitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.uiSplitToolStripMenuItem.Text = "Разрезать";
+            this.uiSplitToolStripMenuItem.Click += new System.EventHandler(this.uiSplitToolStripMenuItem_Click);
             // 
             // VideoStreamRoadControl
             // 
@@ -75,6 +90,7 @@
             this.Name = "VideoStreamRoadControl";
             this.Size = new System.Drawing.Size(717, 75);
             this.uiMainPanel.ResumeLayout(false);
+            this.uiMainContextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -83,6 +99,8 @@
 
         private System.Windows.Forms.Panel uiMainPanel;
         public System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.ContextMenuStrip uiMainContextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem uiDeleteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem uiSplitToolStripMenuItem;
     }
 }
