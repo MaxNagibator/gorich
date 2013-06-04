@@ -11,7 +11,7 @@ namespace VideoEditor
         private readonly Color _selectedColor = Color.Orange;
         private const int MOVING_AREA_HEIGHT = 25;
         public bool _isSelected;
-        public EditableVideoStream EditableVideoStream { get; set; }
+        public VideoStream VideoStream { get; set; }
         public int SelectedPartX1 { get; set; }
         public int SelectedPartX2 { get; set; }
         public Panel SelectedPart { get; set; }
@@ -38,13 +38,13 @@ namespace VideoEditor
             RightCoordinate = Width;
         }
 
-        public VideoStreamRoadPartControl(EditableVideoStream editableVideoStream)
+        public VideoStreamRoadPartControl(VideoStream videoStream)
         {
             InitializeComponent();
             uiLeftCoordinateLabel.BackColor = _infoPanelColor;
             uiRightCoordinateLabel.BackColor = _infoPanelColor;
-            Width = editableVideoStream.CountFrames;
-            EditableVideoStream = editableVideoStream;
+            Width = videoStream.CountFrames;
+            VideoStream = videoStream;
             MoveEnable = true;
             LeftCoordinate = 0;
             RightCoordinate = Width;

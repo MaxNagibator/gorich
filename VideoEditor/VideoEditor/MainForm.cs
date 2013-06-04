@@ -67,14 +67,13 @@ namespace VideoEditor
                 try
                 {
                     var aviManager = new AviManager(uiAviFileNameTextBox.Text, true);
-                    var aviStream = aviManager.GetVideoStream();
-                    var editableVideoStream = new EditableVideoStream(aviStream);
-                    editableVideoStream.GetFrameOpen();
-                    Bitmap bmp = editableVideoStream.GetBitmap(aviStream.CountFrames / 2);
+                    var videoStream = aviManager.GetVideoStream();
+                    videoStream.GetFrameOpen();
+                    Bitmap bmp = videoStream.GetBitmap(videoStream.CountFrames / 2);
                     var videoStreamControl = new VideoStreamBrowseControl {Dock = DockStyle.Top};
                     videoStreamControl.SetFileName(GetCurrentFileName());
                     videoStreamControl.SetFrame(GetResizedBitmap(bmp, 50, 50));
-                    videoStreamControl.EditableVideoStream = editableVideoStream;
+                    videoStreamControl.VideoStream = videoStream;
                     videoStreamControl.SelectVideoStream += SelectVideoStreamControl;
                     uiVideoStreamBrowseControl.Controls.Add(videoStreamControl);
                     _selectedVideoStreamBrowseControl = videoStreamControl;
@@ -128,7 +127,7 @@ namespace VideoEditor
             if (_selectedVideoStreamBrowseControl != null)
             {
                 uiVideoStreamViewCollectionControl.AddVideoStreamView(
-                    new VideoStreamRoadControl(_selectedVideoStreamBrowseControl.EditableVideoStream));
+                    new VideoStreamRoadControl(_selectedVideoStreamBrowseControl.VideoStream));
             }
         }
 
@@ -171,7 +170,7 @@ namespace VideoEditor
         {
             foreach (var roadControl in collectionControl.Controls.OfType<VideoStreamRoadControl>())
             {
-                (roadControl).EditableVideoStream.GetFrameClose();
+                (roadControl).VideoStream.GetFrameClose();
                 CloseAllStreamsInVideoStreamRoadPartControl(roadControl);
             }
         }
@@ -180,7 +179,7 @@ namespace VideoEditor
         {
             foreach (var browseControl in uiVideoStreamBrowseControl.Controls.OfType<VideoStreamBrowseControl>())
             {
-                var videoStream = (browseControl).EditableVideoStream;
+                var videoStream = (browseControl).VideoStream;
                 if (videoStream != null) videoStream.GetFrameClose();
             }
         }
@@ -189,7 +188,7 @@ namespace VideoEditor
         {
             foreach (var partControl in (road).Controls.OfType<VideoStreamRoadPartControl>())
             {
-                (partControl).EditableVideoStream.GetFrameClose();
+                (partControl).VideoStream.GetFrameClose();
             }
         }
     }

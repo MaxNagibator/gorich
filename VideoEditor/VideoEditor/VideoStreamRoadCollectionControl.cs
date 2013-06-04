@@ -18,11 +18,11 @@ namespace VideoEditor
 
         public void AddVideoStreamView(VideoStreamRoadControl videoStreamRoadControl)
         {
-            videoStreamRoadControl.Width = videoStreamRoadControl.EditableVideoStream.CountFrames;
+            videoStreamRoadControl.Width = videoStreamRoadControl.VideoStream.CountFrames;
             videoStreamRoadControl.Location = new Point(0,GetSumHeightAllVideoStreamViewControl());
             videoStreamRoadControl.button1.Text = videoStreamRoadControl.Location.Y.ToString();
             videoStreamRoadControl.SelectVideoStreamViewControl += SelectVideoStreamViewControl;
-            videoStreamRoadControl.AddVideoStreamRoadPart(new VideoStreamRoadPartControl(videoStreamRoadControl.EditableVideoStream));
+            videoStreamRoadControl.AddVideoStreamRoadPart(new VideoStreamRoadPartControl(videoStreamRoadControl.VideoStream));
             videoStreamRoadControl.ChangeImageRoadPartControl += ChangeImageRoadPartControl;
             uiMainPanel.Controls.Add(videoStreamRoadControl);
             uiMainPanel.Height = GetSumHeightAllVideoStreamViewControl();
