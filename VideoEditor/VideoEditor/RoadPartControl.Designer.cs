@@ -54,14 +54,14 @@
             this.uiLeftCoordinateLabel.TabIndex = 2;
             this.uiLeftCoordinateLabel.Text = "-";
             // 
-            // VideoStreamRoadPartControl
+            // RoadPartControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LimeGreen;
             this.Controls.Add(this.uiRightCoordinateLabel);
             this.Controls.Add(this.uiLeftCoordinateLabel);
-            this.Name = "VideoStreamRoadPartControl";
+            this.Name = "RoadPartControl";
             this.Size = new System.Drawing.Size(217, 75);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.VideoStreamRoadPartControl_Paint);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.VideoStreamRoadPartControl_MouseDown);

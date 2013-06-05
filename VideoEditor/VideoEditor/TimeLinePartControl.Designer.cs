@@ -38,7 +38,7 @@
             this.uiFramePositionPanel.Dock = System.Windows.Forms.DockStyle.Left;
             this.uiFramePositionPanel.Location = new System.Drawing.Point(0, 0);
             this.uiFramePositionPanel.Name = "uiFramePositionPanel";
-            this.uiFramePositionPanel.Size = new System.Drawing.Size(5, 20);
+            this.uiFramePositionPanel.Size = new System.Drawing.Size(3, 20);
             this.uiFramePositionPanel.TabIndex = 0;
             // 
             // uiFrameNumberLabel

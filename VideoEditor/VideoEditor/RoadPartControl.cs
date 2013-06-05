@@ -10,7 +10,7 @@ namespace VideoEditor
         private readonly Color _infoPanelColor = Color.DarkGreen;
         private readonly Color _selectedColor = Color.Orange;
         private const int MOVING_AREA_HEIGHT = 25;
-        public bool _isSelected;
+        private bool _isSelected;
         public VideoStream VideoStream { get; set; }
         public int SelectedPartX1 { get; set; }
         public int SelectedPartX2 { get; set; }
@@ -34,8 +34,7 @@ namespace VideoEditor
         {
             InitializeComponent();
             MoveEnable = true;
-            LeftCoordinate = 0;
-            RightCoordinate = Width;
+            UpdateCoordinatesInfo();
         }
 
         public RoadPartControl(VideoStream videoStream)
@@ -46,8 +45,7 @@ namespace VideoEditor
             Width = videoStream.CountFrames;
             VideoStream = videoStream;
             MoveEnable = true;
-            LeftCoordinate = 0;
-            RightCoordinate = Width;
+            UpdateCoordinatesInfo();
         }
         private void VideoStreamRoadPartControl_MouseDown(object sender, MouseEventArgs e)
         {
@@ -87,7 +85,7 @@ namespace VideoEditor
             {
                 SelectedPartX2 = e.X;
                 SelectedPart.Location = new Point(Math.Min(SelectedPartX1, SelectedPartX2), MOVING_AREA_HEIGHT);
-                SelectedPart.Width = Math.Max(SelectedPartX1, SelectedPartX2) - Math.Min(SelectedPartX1, SelectedPartX2);
+                SelectedPart.Width = Math.Abs(SelectedPartX1 - SelectedPartX2);
             }
         }
 
@@ -123,6 +121,12 @@ namespace VideoEditor
             points[3] = new Point(0, MOVING_AREA_HEIGHT);
             Brush brush = new SolidBrush(_infoPanelColor);
             g.FillPolygon(brush, points);
+        }
+
+        public void UpdateCoordinatesInfo()
+        {
+            LeftCoordinate = Location.X;
+            RightCoordinate = Location.X + Width-1;
         }
     }
 }
