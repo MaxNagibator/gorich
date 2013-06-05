@@ -155,21 +155,22 @@ namespace VideoEditor
             IntPtr copiedData2 = totalVideoStream.Copy(0, 1);
             totalVideoStream.Cut(0, totalVideoStream.CountFrames);
             var tempVideoStream = new EditableVideoStream(totalVideoStream);
-            
+
+            for (int i = 0; i < 1000; i++)
+            {
+                tempVideoStream.Paste(copiedData2, 0, tempVideoStream.CountFrames, 1);
+            }
+
             foreach (var roadPartControl in a)
             {
                 var editableVideoStream = new EditableVideoStream(roadPartControl.VideoStream);
                 IntPtr copiedData = editableVideoStream.Copy(0, editableVideoStream.CountFrames);
                 if (roadPartControl.LeftCoordinate > totalVideoStream.CountFrames)
                 {
-                    for (int i = 0; i < roadPartControl.LeftCoordinate - totalVideoStream.CountFrames; i++)
-                    {
-                        tempVideoStream.Paste(copiedData2, 0, tempVideoStream.CountFrames, 1);
-                    }
-                    totalVideoStream.Paste(tempVideoStream.Cut(0, totalVideoStream.CountFrames), 0, totalVideoStream.CountFrames, tempVideoStream.CountFrames);
+                    totalVideoStream.Paste(tempVideoStream.Copy(0, roadPartControl.LeftCoordinate - totalVideoStream.CountFrames), 0, totalVideoStream.CountFrames, tempVideoStream.CountFrames);
+
+                    //AviManager.MakeFileFromStream("D:\\test" + roadPartControl.LeftCoordinate + ".avi", totalVideoStream);
                 }
-                button1.Text += roadPartControl.LeftCoordinate + " - " + (roadPartControl.LeftCoordinate +
-                                editableVideoStream.CountFrames) +"! ";
                 totalVideoStream.Paste(copiedData, 0, roadPartControl.LeftCoordinate, editableVideoStream.CountFrames);
             }
             _streamForPlay = new VideoStream(0,totalVideoStream.Copy(0,totalVideoStream.CountFrames));
