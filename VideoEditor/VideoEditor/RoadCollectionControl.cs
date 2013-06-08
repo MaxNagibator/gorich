@@ -153,21 +153,17 @@ namespace VideoEditor
             var maxLevel = allRoadPartControls.Max(a => a.Level);
             for (int lvl = maxLevel; lvl >= 0; lvl--)
             {
-                foreach (var roadPartControl in allRoadPartControlsOrderBy)
+                foreach (var roadPartControl in allRoadPartControlsOrderBy.Where(a=>a.Level==lvl))
                 {
                     var editableVideoStream = new EditableVideoStream(roadPartControl.VideoStream);
                     IntPtr copiedData = editableVideoStream.Copy(0, editableVideoStream.CountFrames);
-                    if (roadPartControl.LeftCoordinate > _totalVideoStream.CountFrames)
-                    {
-                        _totalVideoStream.Paste(
-                            _tempVideoStream.Copy(0, roadPartControl.LeftCoordinate - _totalVideoStream.CountFrames), 0,
-                            _totalVideoStream.CountFrames, _tempVideoStream.CountFrames);
-                    }
-                    _totalVideoStream.Paste(copiedData, 0, roadPartControl.LeftCoordinate,
-                                            editableVideoStream.CountFrames);
+                    _tempVideoStream.Cut(roadPartControl.LeftCoordinate, editableVideoStream.CountFrames);
+                    if (editableVideoStream.Width != _tempVideoStream.Width || editableVideoStream.Height != _tempVideoStream.Height)
+                    { }
+                    _tempVideoStream.Paste(copiedData,0,roadPartControl.LeftCoordinate,editableVideoStream.CountFrames);
                 }
             }
-            _streamForPlay = new VideoStream(0, _totalVideoStream.Copy(0, _totalVideoStream.CountFrames));
+            _streamForPlay = new VideoStream(0, _tempVideoStream.Copy(0, _tempVideoStream.CountFrames));
             _streamForPlay.GetFrameOpen();
         }
 
