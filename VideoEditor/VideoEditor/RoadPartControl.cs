@@ -17,6 +17,7 @@ namespace VideoEditor
         public Panel SelectedPart { get; set; }
         public bool HasSelectPart { get; set; }
         public bool MoveEnable { get; set; }
+        public int Level { get; set; }
 
         public int RightCoordinate
         {

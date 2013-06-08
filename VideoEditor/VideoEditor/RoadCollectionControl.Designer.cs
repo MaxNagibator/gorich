@@ -30,14 +30,15 @@
         {
             this.components = new System.ComponentModel.Container();
             this.uiTimePanel = new System.Windows.Forms.Panel();
+            this.uiUnionAllPartsButton = new System.Windows.Forms.Button();
+            this.uiStopButton = new System.Windows.Forms.Button();
+            this.uiPlayBackButton = new System.Windows.Forms.Button();
             this.cursorPlayDownPanel = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
+            this.uiPlayButton = new System.Windows.Forms.Button();
             this.uiMainPanel = new System.Windows.Forms.Panel();
             this.cursorPlayUpPanel = new System.Windows.Forms.Panel();
             this.uiPlayTimer = new System.Windows.Forms.Timer(this.components);
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.uiSaveButton = new System.Windows.Forms.Button();
             this.timeLineControl1 = new VideoEditor.TimeLineControl();
             this.uiTimePanel.SuspendLayout();
             this.uiMainPanel.SuspendLayout();
@@ -46,16 +47,47 @@
             // uiTimePanel
             // 
             this.uiTimePanel.BackColor = System.Drawing.SystemColors.Info;
-            this.uiTimePanel.Controls.Add(this.button4);
-            this.uiTimePanel.Controls.Add(this.button3);
-            this.uiTimePanel.Controls.Add(this.button2);
+            this.uiTimePanel.Controls.Add(this.uiSaveButton);
+            this.uiTimePanel.Controls.Add(this.uiUnionAllPartsButton);
+            this.uiTimePanel.Controls.Add(this.uiStopButton);
+            this.uiTimePanel.Controls.Add(this.uiPlayBackButton);
             this.uiTimePanel.Controls.Add(this.cursorPlayDownPanel);
-            this.uiTimePanel.Controls.Add(this.button1);
+            this.uiTimePanel.Controls.Add(this.uiPlayButton);
             this.uiTimePanel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.uiTimePanel.Location = new System.Drawing.Point(0, 193);
             this.uiTimePanel.Name = "uiTimePanel";
             this.uiTimePanel.Size = new System.Drawing.Size(1215, 24);
             this.uiTimePanel.TabIndex = 4;
+            // 
+            // uiUnionAllPartsButton
+            // 
+            this.uiUnionAllPartsButton.Location = new System.Drawing.Point(387, 2);
+            this.uiUnionAllPartsButton.Name = "uiUnionAllPartsButton";
+            this.uiUnionAllPartsButton.Size = new System.Drawing.Size(75, 19);
+            this.uiUnionAllPartsButton.TabIndex = 4;
+            this.uiUnionAllPartsButton.Text = "склеить";
+            this.uiUnionAllPartsButton.UseVisualStyleBackColor = true;
+            this.uiUnionAllPartsButton.Click += new System.EventHandler(this.uiUnionAllPartsButton_Click);
+            // 
+            // uiStopButton
+            // 
+            this.uiStopButton.Location = new System.Drawing.Point(169, 0);
+            this.uiStopButton.Name = "uiStopButton";
+            this.uiStopButton.Size = new System.Drawing.Size(44, 21);
+            this.uiStopButton.TabIndex = 3;
+            this.uiStopButton.Text = "[]";
+            this.uiStopButton.UseVisualStyleBackColor = true;
+            this.uiStopButton.Click += new System.EventHandler(this.uiStopButton_Click);
+            // 
+            // uiPlayBackButton
+            // 
+            this.uiPlayBackButton.Location = new System.Drawing.Point(116, 0);
+            this.uiPlayBackButton.Name = "uiPlayBackButton";
+            this.uiPlayBackButton.Size = new System.Drawing.Size(47, 21);
+            this.uiPlayBackButton.TabIndex = 2;
+            this.uiPlayBackButton.Text = "<-";
+            this.uiPlayBackButton.UseVisualStyleBackColor = true;
+            this.uiPlayBackButton.Click += new System.EventHandler(this.uiPlayBackButton_Click);
             // 
             // cursorPlayDownPanel
             // 
@@ -67,15 +99,15 @@
             this.cursorPlayDownPanel.Size = new System.Drawing.Size(10, 24);
             this.cursorPlayDownPanel.TabIndex = 1;
             // 
-            // button1
+            // uiPlayButton
             // 
-            this.button1.Location = new System.Drawing.Point(357, 2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(843, 19);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.uiPlayButton.Location = new System.Drawing.Point(219, 0);
+            this.uiPlayButton.Name = "uiPlayButton";
+            this.uiPlayButton.Size = new System.Drawing.Size(43, 21);
+            this.uiPlayButton.TabIndex = 0;
+            this.uiPlayButton.Text = "->";
+            this.uiPlayButton.UseVisualStyleBackColor = true;
+            this.uiPlayButton.Click += new System.EventHandler(this.uiPlayButton_Click);
             // 
             // uiMainPanel
             // 
@@ -101,35 +133,15 @@
             // 
             this.uiPlayTimer.Tick += new System.EventHandler(this.uiPlayTimer_Tick);
             // 
-            // button2
+            // uiSaveButton
             // 
-            this.button2.Location = new System.Drawing.Point(25, 2);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 19);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(147, 3);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 19);
-            this.button3.TabIndex = 3;
-            this.button3.Text = "button3";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(259, 2);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 19);
-            this.button4.TabIndex = 4;
-            this.button4.Text = "button4";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.uiSaveButton.Location = new System.Drawing.Point(468, 2);
+            this.uiSaveButton.Name = "uiSaveButton";
+            this.uiSaveButton.Size = new System.Drawing.Size(75, 19);
+            this.uiSaveButton.TabIndex = 5;
+            this.uiSaveButton.Text = "сохранить";
+            this.uiSaveButton.UseVisualStyleBackColor = true;
+            this.uiSaveButton.Click += new System.EventHandler(this.uiSaveButton_Click);
             // 
             // timeLineControl1
             // 
@@ -160,12 +172,13 @@
         private System.Windows.Forms.Panel uiMainPanel;
         private System.Windows.Forms.Panel uiTimePanel;
         private System.Windows.Forms.Panel cursorPlayDownPanel;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button uiPlayButton;
         private System.Windows.Forms.Timer uiPlayTimer;
         private System.Windows.Forms.Panel cursorPlayUpPanel;
         private TimeLineControl timeLineControl1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button uiPlayBackButton;
+        private System.Windows.Forms.Button uiStopButton;
+        private System.Windows.Forms.Button uiUnionAllPartsButton;
+        private System.Windows.Forms.Button uiSaveButton;
     }
 }

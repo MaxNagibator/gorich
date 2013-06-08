@@ -13,8 +13,11 @@ namespace VideoEditor
         public event EventHandler<FrameEventArgs> ChangeImageRoadsControl;
         private int _maxRoadLength;
         private bool _isPlayToBack;
+        private List<RoadControl> _allRoadControls = new List<RoadControl>();
         private List<RoadPartControl> _allRoadPartControls = new List<RoadPartControl>();
         private VideoStream _streamForPlay;
+        private EditableVideoStream _tempVideoStream;
+        private EditableVideoStream _totalVideoStream;
 
         public RoadCollectionControl()
         {
@@ -25,7 +28,6 @@ namespace VideoEditor
         {
             videoStreamRoadControl.Width = videoStreamRoadControl.VideoStream.CountFrames;
             videoStreamRoadControl.Location = new Point(0,GetSumHeightAllVideoStreamViewControl());
-            videoStreamRoadControl.button1.Text = videoStreamRoadControl.Location.Y.ToString();
             videoStreamRoadControl.SelectVideoStreamViewControl += SelectVideoStreamViewControl;
             videoStreamRoadControl.AddVideoStreamRoadPart(new RoadPartControl(videoStreamRoadControl.VideoStream));
             videoStreamRoadControl.ChangeImageRoadPartControl += ChangeImageRoadPartControl;
@@ -91,8 +93,7 @@ namespace VideoEditor
             uiMainPanel.Width = maxWidth;
         }
 
-        // vse chto nizhe peredelat'
-        private void button1_Click(object sender, EventArgs e)
+        private void uiPlayButton_Click(object sender, EventArgs e)
         {
             _isPlayToBack = false;
             Play();
@@ -108,7 +109,6 @@ namespace VideoEditor
 
         private void uiPlayTimer_Tick(object sender, EventArgs e)
         {
-
             var step = _isPlayToBack ? -1  : 1;
             cursorPlayUpPanel.Location = new Point(cursorPlayDownPanel.Location.X + step, cursorPlayDownPanel.Location.Y);
             cursorPlayDownPanel.Location = new Point(cursorPlayDownPanel.Location.X + step, cursorPlayDownPanel.Location.Y);
@@ -116,12 +116,11 @@ namespace VideoEditor
             {
 
                 var a = _streamForPlay.GetBitmap(cursorPlayDownPanel.Location.X);
-                FireChangeImageRoadPartControl(new FrameEventArgs() { Frame = a });
-                button4.Text = "+";
+                FireChangeImageRoadPartControl(new FrameEventArgs { Frame = a });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                button3.Text = "-";
+                MessageBox.Show("Fail", ex.Message);
             }
             checkStop();
         }
@@ -134,63 +133,102 @@ namespace VideoEditor
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void uiPlayBackButton_Click(object sender, EventArgs e)
         {
             _isPlayToBack = true;
             Play();
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void uiStopButton_Click(object sender, EventArgs e)
         {
             uiPlayTimer.Stop();
         }
 
-        private void button4_Click(object sender, EventArgs e)
+
+        private void GetAllRoadPart(Control ctrl)
         {
             _allRoadPartControls.Clear();
-            GetAllRoadPartControl(uiMainPanel);
-            var c = _allRoadPartControls;
-            var a = c.OrderBy(b => b.LeftCoordinate);
-            var totalVideoStream = new EditableVideoStream(a.First().VideoStream);
-            IntPtr copiedData2 = totalVideoStream.Copy(0, 1);
-            totalVideoStream.Cut(0, totalVideoStream.CountFrames);
-            var tempVideoStream = new EditableVideoStream(totalVideoStream);
-
-            for (int i = 0; i < 1000; i++)
+            _allRoadControls.Clear();
+            GetAllRoadControl(ctrl);
+            var allRoadControlsOrderBy = _allRoadControls.OrderBy(a => a.Location.Y);
+            int lvl = 0;
+            foreach (var roadControl in allRoadControlsOrderBy)
             {
-                tempVideoStream.Paste(copiedData2, 0, tempVideoStream.CountFrames, 1);
+                GetAllRoadPartControl(roadControl, lvl);
+                lvl++;
             }
-
-            foreach (var roadPartControl in a)
-            {
-                var editableVideoStream = new EditableVideoStream(roadPartControl.VideoStream);
-                IntPtr copiedData = editableVideoStream.Copy(0, editableVideoStream.CountFrames);
-                if (roadPartControl.LeftCoordinate > totalVideoStream.CountFrames)
-                {
-                    totalVideoStream.Paste(tempVideoStream.Copy(0, roadPartControl.LeftCoordinate - totalVideoStream.CountFrames), 0, totalVideoStream.CountFrames, tempVideoStream.CountFrames);
-
-                    //AviManager.MakeFileFromStream("D:\\test" + roadPartControl.LeftCoordinate + ".avi", totalVideoStream);
-                }
-                totalVideoStream.Paste(copiedData, 0, roadPartControl.LeftCoordinate, editableVideoStream.CountFrames);
-            }
-            _streamForPlay = new VideoStream(0,totalVideoStream.Copy(0,totalVideoStream.CountFrames));
-            _streamForPlay.GetFrameOpen();
-                                AviManager.MakeFileFromStream("D:\\test.avi", totalVideoStream);
-                totalVideoStream.Close();
         }
 
-
-        private void GetAllRoadPartControl(Control ctrl)
+        private void GetAllRoadPartControl(Control ctrl, int lvl)
         {
             foreach (Control control in ctrl.Controls)
             {
                 var roadPartControl = control as RoadPartControl;
                 if (roadPartControl != null)
                 {
+                    roadPartControl.Level = lvl;
                     _allRoadPartControls.Add(roadPartControl);
                 }
-                GetAllRoadPartControl(control);
+                GetAllRoadPartControl(control, lvl);
             }
+        }
+
+        private void GetAllRoadControl(Control ctrl)
+        {
+            foreach (Control control in ctrl.Controls)
+            {
+                var roadControl = control as RoadControl;
+                if (roadControl != null)
+                {
+                    _allRoadControls.Add(roadControl);
+                }
+                GetAllRoadControl(control);
+            }
+        }
+
+        private void uiUnionAllPartsButton_Click(object sender, EventArgs e)
+        {
+            GetAllRoadPart(uiMainPanel);
+            var allRoadPartControls = _allRoadPartControls;
+            var allRoadPartControlsOrderBy = allRoadPartControls.OrderBy(b => b.LeftCoordinate);
+            CreateTotalVideoStream(allRoadPartControlsOrderBy);
+
+            foreach (var roadPartControl in allRoadPartControlsOrderBy)
+            {
+                var editableVideoStream = new EditableVideoStream(roadPartControl.VideoStream);
+                IntPtr copiedData = editableVideoStream.Copy(0, editableVideoStream.CountFrames);
+                if (roadPartControl.LeftCoordinate > _totalVideoStream.CountFrames)
+                {
+                    _totalVideoStream.Paste(
+                        _tempVideoStream.Copy(0, roadPartControl.LeftCoordinate - _totalVideoStream.CountFrames), 0,
+                        _totalVideoStream.CountFrames, _tempVideoStream.CountFrames);
+                }
+                _totalVideoStream.Paste(copiedData, 0, roadPartControl.LeftCoordinate, editableVideoStream.CountFrames);
+            }
+            _streamForPlay = new VideoStream(0, _totalVideoStream.Copy(0, _totalVideoStream.CountFrames));
+            _streamForPlay.GetFrameOpen();
+        }
+
+        private void CreateTotalVideoStream(IOrderedEnumerable<RoadPartControl> allRoadPartControlsOrderBy)
+        {
+            _totalVideoStream = new EditableVideoStream(allRoadPartControlsOrderBy.First().VideoStream);
+            IntPtr copyFirstFrame = _totalVideoStream.Copy(0, 1);
+            _totalVideoStream.Cut(0, _totalVideoStream.CountFrames);
+            CreateTempVideoStream(allRoadPartControlsOrderBy, copyFirstFrame);
+        }
+
+        private void CreateTempVideoStream(IOrderedEnumerable<RoadPartControl> allRoadPartControlsOrderBy, IntPtr copyFirstFrame)
+        {
+            _tempVideoStream = new EditableVideoStream(_totalVideoStream);
+            for (int i = 0; i < allRoadPartControlsOrderBy.Max(a => a.RightCoordinate); i++)
+            {
+                _tempVideoStream.Paste(copyFirstFrame, 0, _tempVideoStream.CountFrames, 1);
+            }
+        }
+
+        private void uiSaveButton_Click(object sender, EventArgs e)
+        {
+            AviManager.MakeFileFromStream("D:\\test.avi", _streamForPlay);
         }
     }
 }
