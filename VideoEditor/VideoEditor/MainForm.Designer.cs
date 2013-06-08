@@ -135,7 +135,7 @@
             this.uiDeleteVideoStreamButton.TabIndex = 5;
             this.uiDeleteVideoStreamButton.Text = "delete";
             this.uiDeleteVideoStreamButton.UseVisualStyleBackColor = true;
-            this.uiDeleteVideoStreamButton.Click += new System.EventHandler(this.button2_Click);
+            this.uiDeleteVideoStreamButton.Click += new System.EventHandler(this.uiDeleteVideoStreamButton_Click);
             // 
             // uiAddVideoStreamButton
             // 
@@ -145,7 +145,7 @@
             this.uiAddVideoStreamButton.TabIndex = 4;
             this.uiAddVideoStreamButton.Text = "->";
             this.uiAddVideoStreamButton.UseVisualStyleBackColor = true;
-            this.uiAddVideoStreamButton.Click += new System.EventHandler(this.button1_Click);
+            this.uiAddVideoStreamButton.Click += new System.EventHandler(this.uiAddVideoStreamButton_Click);
             // 
             // uiVideoStreamViewCollectionControl
             // 

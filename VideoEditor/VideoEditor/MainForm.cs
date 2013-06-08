@@ -117,7 +117,7 @@ namespace VideoEditor
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void uiAddVideoStreamButton_Click(object sender, EventArgs e)
         {
             if (_selectedVideoStreamBrowseControl != null)
             {
@@ -126,7 +126,7 @@ namespace VideoEditor
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void uiDeleteVideoStreamButton_Click(object sender, EventArgs e)
         {
             uiVideoStreamViewCollectionControl.DeleteVideoStreamView();
         }

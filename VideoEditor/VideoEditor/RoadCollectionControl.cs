@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using AviFile;
@@ -158,8 +159,7 @@ namespace VideoEditor
                     var editableVideoStream = new EditableVideoStream(roadPartControl.VideoStream);
                     IntPtr copiedData = editableVideoStream.Copy(0, editableVideoStream.CountFrames);
                     _tempVideoStream.Cut(roadPartControl.LeftCoordinate, editableVideoStream.CountFrames);
-                    if (editableVideoStream.Width != _tempVideoStream.Width || editableVideoStream.Height != _tempVideoStream.Height)
-                    { }
+
                     _tempVideoStream.Paste(copiedData,0,roadPartControl.LeftCoordinate,editableVideoStream.CountFrames);
                 }
             }
@@ -228,7 +228,14 @@ namespace VideoEditor
 
         private void uiSaveButton_Click(object sender, EventArgs e)
         {
-            AviManager.MakeFileFromStream("D:\\test.avi", _streamForPlay);
+            using (var dialog = new SaveFileDialog())
+            {
+                dialog.Filter = "avi |*.avi";
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    AviManager.MakeFileFromStream(dialog.FileName, _streamForPlay);
+                }
+            }
         }
     }
 }

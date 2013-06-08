@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.uiTimePanel = new System.Windows.Forms.Panel();
+            this.uiSaveButton = new System.Windows.Forms.Button();
             this.uiUnionAllPartsButton = new System.Windows.Forms.Button();
             this.uiStopButton = new System.Windows.Forms.Button();
             this.uiPlayBackButton = new System.Windows.Forms.Button();
@@ -38,8 +39,7 @@
             this.uiMainPanel = new System.Windows.Forms.Panel();
             this.cursorPlayUpPanel = new System.Windows.Forms.Panel();
             this.uiPlayTimer = new System.Windows.Forms.Timer(this.components);
-            this.uiSaveButton = new System.Windows.Forms.Button();
-            this.timeLineControl1 = new VideoEditor.TimeLineControl();
+            this.uiTimeLineControl = new VideoEditor.TimeLineControl();
             this.uiTimePanel.SuspendLayout();
             this.uiMainPanel.SuspendLayout();
             this.SuspendLayout();
@@ -58,6 +58,16 @@
             this.uiTimePanel.Name = "uiTimePanel";
             this.uiTimePanel.Size = new System.Drawing.Size(1215, 24);
             this.uiTimePanel.TabIndex = 4;
+            // 
+            // uiSaveButton
+            // 
+            this.uiSaveButton.Location = new System.Drawing.Point(468, 2);
+            this.uiSaveButton.Name = "uiSaveButton";
+            this.uiSaveButton.Size = new System.Drawing.Size(75, 19);
+            this.uiSaveButton.TabIndex = 5;
+            this.uiSaveButton.Text = "сохранить";
+            this.uiSaveButton.UseVisualStyleBackColor = true;
+            this.uiSaveButton.Click += new System.EventHandler(this.uiSaveButton_Click);
             // 
             // uiUnionAllPartsButton
             // 
@@ -133,24 +143,14 @@
             // 
             this.uiPlayTimer.Tick += new System.EventHandler(this.uiPlayTimer_Tick);
             // 
-            // uiSaveButton
+            // uiTimeLineControl
             // 
-            this.uiSaveButton.Location = new System.Drawing.Point(468, 2);
-            this.uiSaveButton.Name = "uiSaveButton";
-            this.uiSaveButton.Size = new System.Drawing.Size(75, 19);
-            this.uiSaveButton.TabIndex = 5;
-            this.uiSaveButton.Text = "сохранить";
-            this.uiSaveButton.UseVisualStyleBackColor = true;
-            this.uiSaveButton.Click += new System.EventHandler(this.uiSaveButton_Click);
-            // 
-            // timeLineControl1
-            // 
-            this.timeLineControl1.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.timeLineControl1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.timeLineControl1.Location = new System.Drawing.Point(0, 0);
-            this.timeLineControl1.Name = "timeLineControl1";
-            this.timeLineControl1.Size = new System.Drawing.Size(1215, 20);
-            this.timeLineControl1.TabIndex = 6;
+            this.uiTimeLineControl.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.uiTimeLineControl.Dock = System.Windows.Forms.DockStyle.Top;
+            this.uiTimeLineControl.Location = new System.Drawing.Point(0, 0);
+            this.uiTimeLineControl.Name = "uiTimeLineControl";
+            this.uiTimeLineControl.Size = new System.Drawing.Size(1215, 20);
+            this.uiTimeLineControl.TabIndex = 6;
             // 
             // RoadCollectionControl
             // 
@@ -158,7 +158,7 @@
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.Controls.Add(this.uiTimePanel);
             this.Controls.Add(this.uiMainPanel);
-            this.Controls.Add(this.timeLineControl1);
+            this.Controls.Add(this.uiTimeLineControl);
             this.Name = "RoadCollectionControl";
             this.Size = new System.Drawing.Size(1215, 217);
             this.uiTimePanel.ResumeLayout(false);
@@ -175,7 +175,7 @@
         private System.Windows.Forms.Button uiPlayButton;
         private System.Windows.Forms.Timer uiPlayTimer;
         private System.Windows.Forms.Panel cursorPlayUpPanel;
-        private TimeLineControl timeLineControl1;
+        private TimeLineControl uiTimeLineControl;
         private System.Windows.Forms.Button uiPlayBackButton;
         private System.Windows.Forms.Button uiStopButton;
         private System.Windows.Forms.Button uiUnionAllPartsButton;
